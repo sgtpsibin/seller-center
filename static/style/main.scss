@@ -1,0 +1,8 @@
+@import 'base';
+@import 'layout';
+@import 'components';
+@import '~bootstrap/scss/bootstrap.scss';
+
+.header-nav .row > * {
+    padding: 1rem;
+}
