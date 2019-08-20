@@ -1,6 +1,11 @@
 import React from 'react';
-import {Navigation,Frame} from '@shopify/polaris';
-import {HomeMajorMonotone, OrdersMajorTwotone, ConversationMinor,ArrowLeftMinor} from '@shopify/polaris-icons';
+import {Navigation} from '@shopify/polaris';
+import {HomeMajorMonotone, 
+        OrdersMajorTwotone, 
+        ConversationMinor,
+        ProductsMajorMonotone,
+        CustomersMajorMonotone,
+        AnalyticsMajorMonotone} from '@shopify/polaris-icons';
 
 class NavigationBar extends React.Component {
 
@@ -14,8 +19,9 @@ class NavigationBar extends React.Component {
         };
     };  
     
-    navigationMarkup = (
-        <Navigation location="/">
+  render() {
+    return (
+      <Navigation location="/">
           <Navigation.Section        
             items={[
               {
@@ -28,6 +34,21 @@ class NavigationBar extends React.Component {
                 icon: OrdersMajorTwotone,
                 onClick: this.toggleState('isLoading'),
               },
+              {
+                label: 'Sản phẩm',
+                icon: ProductsMajorMonotone,
+                onClick: this.toggleState('isLoading'),
+              },
+              {
+                label: 'Khách hàng',
+                icon: CustomersMajorMonotone,
+                onClick: this.toggleState('isLoading'),
+              },
+              {
+                label: 'Thống kê',
+                icon: AnalyticsMajorMonotone,
+                onClick: this.toggleState('isLoading'),
+              }
             ]}
             action={{
               icon: ConversationMinor,
@@ -35,11 +56,7 @@ class NavigationBar extends React.Component {
               onClick: this.toggleState('modalActive'),
             }}
           />
-        </Navigation>
-      );
-  render() {
-    return (
-      <Frame navigation={this.navigationMarkup} ></Frame>
+        </Navigation>      
     );
   }
 }

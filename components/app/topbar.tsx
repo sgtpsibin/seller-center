@@ -62,7 +62,21 @@ class TopBarMenu extends React.Component<{},TopBarState> {
       />
     );
 
-    const topBarMarkup = (
+    // const topBarMarkup = (
+    //   <TopBar
+    //     showNavigationToggle={true}
+    //     userMenu={userMenuMarkup}
+    //     searchResultsVisible={searchActive}
+    //     searchField={searchFieldMarkup}
+    //     searchResults={searchResultsMarkup}
+    //     onSearchResultsDismiss={handleSearchResultsDismiss}
+    //     onNavigationToggle={() => {
+    //       console.log('toggle navigation visibility');
+    //     }}
+    //   />
+    // );
+
+    return (
       <TopBar
         showNavigationToggle={true}
         userMenu={userMenuMarkup}
@@ -74,14 +88,7 @@ class TopBarMenu extends React.Component<{},TopBarState> {
           console.log('toggle navigation visibility');
         }}
       />
-    );
-
-    return (
-      <div style={{height: '50px'}}>
-        
-          <Frame topBar={topBarMarkup} />
-    
-      </div>
+      
     );
   }
 

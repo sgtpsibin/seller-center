@@ -14,9 +14,9 @@ const theme = {
     },
   },
   logo: {
-    width: 124,
+    width: 50,
     topBarSource:
-      'https://mcdn.thitruongsi.com/images/logo.png',
+      '../static/images/logo.png',
     url: 'https://thitruongsi.com',
     accessibilityLabel: 'Thị Trường Sỉ',
   },
