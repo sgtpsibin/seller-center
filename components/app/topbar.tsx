@@ -37,7 +37,7 @@ class TopBarMenu extends React.Component<{},TopBarState> {
         ]}
         name="Dharma"
         detail="Jaded Pixel"
-        initials="D"
+        initials="QA"
         open={userMenuOpen}
         onToggle={toggleUserMenu}
       />
@@ -84,9 +84,7 @@ class TopBarMenu extends React.Component<{},TopBarState> {
         searchField={searchFieldMarkup}
         searchResults={searchResultsMarkup}
         onSearchResultsDismiss={handleSearchResultsDismiss}
-        onNavigationToggle={() => {
-          console.log('toggle navigation visibility');
-        }}
+        onNavigationToggle={toggleState('showMobileNavigation')}
       />
       
     );
@@ -113,6 +111,15 @@ class TopBarMenu extends React.Component<{},TopBarState> {
       this.setState({searchActive: false});
     }
   };
+
+  
 }
+
+const toggleState = (key) => {
+  return () => {
+    this.setState((prevState) => ({[key]: !prevState[key]}));
+  };
+};
+
 
 export default TopBarMenu;
