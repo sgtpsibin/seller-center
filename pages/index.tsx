@@ -1,8 +1,9 @@
 import React from 'react';
-import {AppProvider, Page, Card, Button} from '@shopify/polaris';
+import {Page} from '@shopify/polaris';
+
 
 import TopBar from '../components/app/topbar';
-import Layout from '../components/library/layout';
+import Layout1 from '../components/library/layout';
 
 
 
@@ -16,16 +17,14 @@ class Index extends React.Component<{userAgent:any}> {
   render() {
     
     return(
-    <Layout>
-      <TopBar />
-      <AppProvider>        
-      <Page title="Example app">
-        <Card sectioned>
-          <Button onClick={() => alert('Button clicked!')}>Example button</Button>
-        </Card>
+    <Layout1 title="Quản lý bán hàng">
+      
+      <Page title="OK" singleColumn>       
+        <p>content</p>
       </Page>
-    </AppProvider>
-    </Layout>
+      
+  
+    </Layout1>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActionList, AppProvider, Card, Frame, TopBar} from '@shopify/polaris';
+import {ActionList, Card, Frame, TopBar} from '@shopify/polaris';
 import {ArrowLeftMinor} from '@shopify/polaris-icons';
 
 interface TopBarState {
@@ -24,20 +24,6 @@ class TopBarMenu extends React.Component<{},TopBarState> {
     } = this;
     const {userMenuOpen, searchText, searchActive} = state;
 
-    const theme = {
-      colors: {
-        topBar: {
-          background: '#357997',
-        },
-      },
-      logo: {
-        width: 124,
-        topBarSource:
-          'https://cdn.shopify.com/s/files/1/0446/6937/files/jaded-pixel-logo-color.svg?6215648040070010999',
-        url: 'http://jadedpixel.com',
-        accessibilityLabel: 'Jaded Pixel',
-      },
-    };
 
     const userMenuMarkup = (
       <TopBar.UserMenu
@@ -91,10 +77,10 @@ class TopBarMenu extends React.Component<{},TopBarState> {
     );
 
     return (
-      <div style={{height: '250px'}}>
-        <AppProvider theme={theme}>
+      <div style={{height: '50px'}}>
+        
           <Frame topBar={topBarMarkup} />
-        </AppProvider>
+    
       </div>
     );
   }
