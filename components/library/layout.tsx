@@ -1,8 +1,10 @@
 import React from 'react';
-import {ActionList, AppProvider, Card, ContextualSaveBar, FormLayout, Frame, Layout, Loading, Modal, Navigation, Page, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer, TextField, Toast, TopBar} from '@shopify/polaris';
+import {ActionList,Card, ContextualSaveBar, FormLayout, Frame, Layout, Loading, Modal, Navigation, Page, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer, TextField, Toast, TopBar} from '@shopify/polaris';
 import NavigationBar from '../app/navigation';
+import {connect} from 'react-redux';
+import TopBarMenu from '../app/topbar';
 
-class AppLayout extends React.Component {
+class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:any}> {
   defaultState = {
     emailFieldValue: 'dharma@jadedpixel.com',
     nameFieldValue: 'Jaded Pixel',
@@ -79,7 +81,7 @@ class AppLayout extends React.Component {
         actions={userMenuActions}
         name="Dharma"
         detail={storeName}
-        initials="D"
+        initials="E"
         open={userMenuOpen}
         onToggle={this.toggleState('userMenuOpen')}
       />
@@ -105,15 +107,16 @@ class AppLayout extends React.Component {
     );
 
     const topBarMarkup = (
-      <TopBar
-        showNavigationToggle={true}
-        userMenu={userMenuMarkup}
-        searchResultsVisible={searchActive}
-        searchField={searchFieldMarkup}
-        searchResults={searchResultsMarkup}
-        onSearchResultsDismiss={this.handleSearchResultsDismiss}
-        onNavigationToggle={this.toggleState('showMobileNavigation')}
-      />
+      // <TopBar
+      //   showNavigationToggle={true}
+      //   userMenu={userMenuMarkup}
+      //   searchResultsVisible={searchActive}
+      //   searchField={searchFieldMarkup}
+      //   searchResults={searchResultsMarkup}
+      //   onSearchResultsDismiss={this.handleSearchResultsDismiss}
+      //   onNavigationToggle={this.toggleState('showMobileNavigation')}
+      // />
+      <TopBarMenu/>
     );
 
     const navigationMarkup = (
@@ -173,15 +176,15 @@ class AppLayout extends React.Component {
     );
 
   
-
+        console.log(this.props.showMobileNavigation);
     return (
       <div style={{height: '500px'}}>
         
           <Frame
             topBar={topBarMarkup}
             navigation={navigationMarkup}
-            showMobileNavigation={showMobileNavigation}
-            onNavigationDismiss={this.toggleState('showMobileNavigation')}
+            showMobileNavigation={this.props.showMobileNavigation}
+            onNavigationDismiss={()=>{this.props.dispatch({type:'TOOGLE_NAVIGATION'})}}
           >
             {contextualSaveBarMarkup}
             {loadingMarkup}
@@ -259,5 +262,10 @@ class AppLayout extends React.Component {
     this.setState({supportMessage});
   };
 }
+const mapStateToProps = (state) => {
+  return {
+    showMobileNavigation: state.topbar.showMobileNavigation
+  }
 
-export default AppLayout;
+}
+export default connect(mapStateToProps)(AppLayout);

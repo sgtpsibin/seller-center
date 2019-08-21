@@ -1,18 +1,25 @@
 import React from 'react';
 import {ActionList, Card, Frame, TopBar} from '@shopify/polaris';
 import {ArrowLeftMinor} from '@shopify/polaris-icons';
+import {connect} from 'react-redux';
 
-interface TopBarState {
+type TopBarState ={
     userMenuOpen: boolean,
     searchActive: boolean,
-    searchText: string
+    searchText: string,
+    showMobileNavigation:boolean
+}
+type TopBarProps = {
+  tooglenav: any
 }
 
-class TopBarMenu extends React.Component<{},TopBarState> {
+class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
   state = {
     userMenuOpen: false,
     searchActive: false,
+    showMobileNavigation:false,
     searchText: '',
+    
   };
 
   render() {
@@ -84,7 +91,7 @@ class TopBarMenu extends React.Component<{},TopBarState> {
         searchField={searchFieldMarkup}
         searchResults={searchResultsMarkup}
         onSearchResultsDismiss={handleSearchResultsDismiss}
-        onNavigationToggle={toggleState('showMobileNavigation')}
+        onNavigationToggle={this.props.tooglenav}
       />
       
     );
@@ -115,11 +122,9 @@ class TopBarMenu extends React.Component<{},TopBarState> {
   
 }
 
-const toggleState = (key) => {
-  return () => {
-    this.setState((prevState) => ({[key]: !prevState[key]}));
-  };
-};
-
-
-export default TopBarMenu;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    tooglenav: () => dispatch({type:'TOOGLE_NAVIGATION'})
+  }
+}
+export default connect(null,mapDispatchToProps)(TopBarMenu);
