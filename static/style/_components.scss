@@ -1,0 +1,21 @@
+//Index Page 
+
+.app-index .order-notifications {    
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+
+    & .Polaris-Icon {
+        margin: unset !important;
+    }
+
+    & p {
+        font-size: 18px;
+        margin-left: 1.5rem;
+        margin-top: .62rem;
+    }
+}
+
+.app-index .Polaris-Card__Section {
+    padding: 1rem;
+}

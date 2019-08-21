@@ -1,1 +1,4 @@
 export const TOOGLE_NAVIGATION = 'TOOGLE_NAVIGATION';
+export const TOOGLE_LOADING = 'TOOGLE_LOADING';
+export const LOADING = 'LOADING';
+export const LOADED = 'LOADED';

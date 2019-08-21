@@ -1,14 +1,22 @@
 import React from 'react';
-import {ActionList,Card, ContextualSaveBar, FormLayout, Frame, Layout, Loading, Modal, Navigation, Page, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer, TextField, Toast, TopBar} from '@shopify/polaris';
+import {ActionList,Card, ContextualSaveBar, FormLayout, Frame, Layout, Loading, Modal, Navigation, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer, TextField, Toast, TopBar} from '@shopify/polaris';
 import NavigationBar from '../app/navigation';
 import {connect} from 'react-redux';
-import TopBarMenu from '../app/topbar';
 
-class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:any}> {
+import TopBarMenu from '../app/topbar';
+import '../../static/style/main.scss';
+
+
+type LayoutProps = {
+  showMobileNavigation:boolean,
+  dispatch:any,
+  isLoading:boolean
+}
+class AppLayout extends React.Component<LayoutProps> {
   defaultState = {
     emailFieldValue: 'dharma@jadedpixel.com',
     nameFieldValue: 'Jaded Pixel',
-  };
+  };  
 
   state = {
     showToast: false,
@@ -124,7 +132,7 @@ class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:a
       <NavigationBar/>
     );
 
-    const loadingMarkup = isLoading ? <Loading /> : null;
+    const loadingMarkup = this.props.isLoading ? <Loading /> : null;
 
     const actualPageMarkup = (
       this.props.children
@@ -145,7 +153,7 @@ class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:a
       </SkeletonPage>
     );
 
-    const pageMarkup = isLoading ? loadingPageMarkup : actualPageMarkup;
+    const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup;
 
     const modalMarkup = (
       <Modal
@@ -176,7 +184,6 @@ class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:a
     );
 
   
-        console.log(this.props.showMobileNavigation);
     return (
       <div style={{height: '500px'}}>
         
@@ -262,9 +269,13 @@ class AppLayout extends React.Component<{showMobileNavigation:boolean,dispatch:a
     this.setState({supportMessage});
   };
 }
+
+
+
 const mapStateToProps = (state) => {
   return {
-    showMobileNavigation: state.topbar.showMobileNavigation
+    showMobileNavigation: state.layout.showMobileNavigation,
+    isLoading: state.layout.isLoading
   }
 
 }

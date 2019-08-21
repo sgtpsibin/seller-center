@@ -6,14 +6,24 @@
 
 :root {
     --top-bar-color: rgb(28, 34, 96);
+    --dark-color: #212b36;
 }
 
 html {
     font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
 }
 
-body {
+body {   
     font-size: 16px;
     max-width: 100%;
+}
+body a {
+    color: var(--dark-color);
+    text-decoration: none;
+    &:hover {
+        color: var(--dark-color);
+        text-decoration: none;
+    }
 }
 

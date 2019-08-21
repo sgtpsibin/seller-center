@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import topbarReducer from './topbar.reducer';
+import layoutReducer from './layout.reducer';
 
 const allreducer = combineReducers({
-  topbar: topbarReducer
+  layout: layoutReducer
 })
 
 export default allreducer

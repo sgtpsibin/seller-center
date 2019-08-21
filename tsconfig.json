@@ -24,6 +24,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "redux/store.ts", "pages/index.js"
+    "**/*.tsx", "redux/store.ts", "pages/index.js", "components/library/navigationItem.js"
   ]
 }

@@ -11,7 +11,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-            <link rel="stylesheet" href="https://sdks.shopifycdn.com/polaris/3.21.1/polaris.min.css"/>        
+            <link rel="stylesheet" href="https://sdks.shopifycdn.com/polaris/3.21.1/polaris.min.css"/> 
+            <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>       
             
         </Head>
         <body>
