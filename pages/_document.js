@@ -11,7 +11,10 @@ class MyDocument extends Document {
       <Html>
         <Head>
             <link rel="stylesheet" href="https://sdks.shopifycdn.com/polaris/3.21.1/polaris.min.css"/> 
-            <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>       
+            <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>  
+            <title>Seller Center - TTS </title>
+            <meta name="robots" content="index, follow"/>
+            <link rel="icon" href="https://mcdn.thitruongsi.com/images/favicon.ico" type="image/x-icon"></link>   
             
         </Head>
         <body>

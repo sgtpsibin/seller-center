@@ -17,20 +17,10 @@ class AppLayout extends React.Component<LayoutProps> {
   render() {
    
     const topBarMarkup = (
-      // <TopBar
-      //   showNavigationToggle={true}
-      //   userMenu={userMenuMarkup}
-      //   searchResultsVisible={searchActive}
-      //   searchField={searchFieldMarkup}
-      //   searchResults={searchResultsMarkup}
-      //   onSearchResultsDismiss={this.handleSearchResultsDismiss}
-      //   onNavigationToggle={this.toggleState('showMobileNavigation')}
-      // />
       <TopBarMenu/>
     );
 
     const navigationMarkup = (
-      // Navigation
       <NavigationBar/>
     );
 
@@ -55,25 +45,19 @@ class AppLayout extends React.Component<LayoutProps> {
       </SkeletonPage>
     );
 
-    const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup;
+    const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
 
-    
-
-  
     return (
-      <div style={{height: '500px'}}>
-        
+      <div style={{height: '500px'}}>        
           <Frame
             topBar={topBarMarkup}
             navigation={navigationMarkup}
             showMobileNavigation={this.props.showMobileNavigation}
             onNavigationDismiss={()=>{this.props.dispatch({type:'TOOGLE_NAVIGATION'})}}
-          >
-          
+          >          
             {loadingMarkup}
             {pageMarkup}
-          </Frame>
-      
+          </Frame>      
       </div>
     );
   }
@@ -100,20 +84,13 @@ class AppLayout extends React.Component<LayoutProps> {
         searchText: '',
       };
     });
-  };
-
- 
-
-  
+  }; 
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
     showMobileNavigation: state.layout.showMobileNavigation,
     isLoading: state.layout.isLoading
   }
-
 }
 export default connect(mapStateToProps)(AppLayout);

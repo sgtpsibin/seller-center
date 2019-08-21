@@ -11,12 +11,7 @@ import {connect} from 'react-redux';
 import Router from 'next/router';
 
 
-class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()=>any}> { 
-    
-
-    state={
-        isLoading: false
-    }
+class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()=>any}> {    
 
     toggleState = (key) => {
         return () => {
@@ -72,18 +67,17 @@ class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()
                   {
                     url: 'orders',
                     label: 'Tất cả đơn hàng',
-                    onClick: ()=> this.goTo('/orders'), 
+                    // onClick: ()=> this.goTo('/orders'), 
                     matches: this.isSelected('/orders')
                                      
                   },
                   {
                     url:'/draft_orders',
                     label: 'Drafts',
-                    onClick: ()=> this.goTo('/draft_orders'),
+                    // onClick: ()=> this.goTo('/draft_orders'),
+                    matches:this.isSelected('/draft_orders')
                   }
-
-              ]
-               
+                ]               
               },
               {
                 url: 'products',
@@ -93,14 +87,18 @@ class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()
                 onClick: () => this.goTo('/products')
               },
               {
+                url: 'customers',
                 label: 'Khách hàng',
                 icon: CustomersMajorMonotone,
-                onClick: this.toggleState('isLoading'),
+                selected: this.isSelected('/customers'),
+                onClick: ()=> this.goTo('/customers')
               },
               {
+                url: 'dashboard',
                 label: 'Thống kê',
                 icon: AnalyticsMajorMonotone,
-                onClick: this.toggleState('isLoading'),
+                selected: this.isSelected('/dashboard'),
+                onClick: ()=> this.goTo('/dashboard')
               }
             ]}
             action={{
