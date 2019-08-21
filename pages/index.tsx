@@ -8,11 +8,7 @@ import {
 
 import AppLayout from '../components/library/layout';
 
-
-
 class Index extends React.Component {
-
-
   
   render() {
     
@@ -36,8 +32,7 @@ class Index extends React.Component {
             </a>
           </Link>
         </div>
-      </Page> 
-      
+      </Page>   
       
     </AppLayout>
     );
