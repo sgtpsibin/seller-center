@@ -8,12 +8,11 @@ import {
 
 import AppLayout from '../components/library/layout';
 
-class Index extends React.Component {
-  
+class Index extends React.Component<{hasAuth:boolean}> {
+
   render() {
-    
-    return(
-    <AppLayout>        
+    const  renderHomePage = (
+      <AppLayout title="SELLER CENTER">        
       <Page title=''>
         <div className="app-index">
           <Link href='/orders'>
@@ -32,9 +31,15 @@ class Index extends React.Component {
             </a>
           </Link>
         </div>
-      </Page>   
-      
+      </Page>      
     </AppLayout>
+    );
+   const indexPage =  renderHomePage ;
+    
+    return(
+      <>
+        {indexPage}
+      </>
     );
   }
 }

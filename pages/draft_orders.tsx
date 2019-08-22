@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Page} from '@shopify/polaris';
 
 import AppLayout from '../components/library/layout';
 
-
-
-class Draft_Orders extends React.Component {
-
+class Draft_Orders extends Component {
   
   render() {
     
@@ -14,8 +11,7 @@ class Draft_Orders extends React.Component {
     <AppLayout>  
       <Page title="Draft Orders">
         <p>PageContent</p>
-      </Page> 
-      
+      </Page>       
     </AppLayout>
     );
   }

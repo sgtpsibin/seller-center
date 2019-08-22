@@ -1,17 +1,23 @@
 import React from 'react';
 import {Navigation} from '@shopify/polaris';
+
 import {HomeMajorMonotone, 
         OrdersMajorTwotone, 
         ConversationMinor,
         ProductsMajorMonotone,
         CustomersMajorMonotone,
         AnalyticsMajorMonotone} from '@shopify/polaris-icons';
+
 import {withRouter, NextRouter } from 'next/router';
 import {connect} from 'react-redux';
 import Router from 'next/router';
 
-
-class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()=>any}> {    
+type Props = {
+  router: NextRouter,
+  Loading:()=>any,
+  Loaded: () => any
+}
+class NavigationBar extends React.Component<Props> {    
 
     toggleState = (key) => {
         return () => {
@@ -20,20 +26,13 @@ class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()
     };  
 
     routerConfig = () => {
-      Router.events.on('routeChangeStart',(url)=>{
+      Router.events.on('routeChangeStart',()=>{
         this.props.Loading();
       });
-      Router.events.on('routeChangeComplete',(url)=>{
+      Router.events.on('routeChangeComplete',()=>{
         this.props.Loaded();
       });
       return;      
-    }
-
-    goTo = (url:string) => {
-    
-      const {router} = this.props      
-      event.preventDefault();
-      router.push(url);
     }
     
     isSelected = (url:string):boolean => {
@@ -45,7 +44,7 @@ class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()
   render() {
     this.routerConfig();
     return (
-      <Navigation location="/">
+      <Navigation location="">
           <Navigation.Section        
             items={[
               {
@@ -53,52 +52,44 @@ class NavigationBar extends React.Component<{router:NextRouter,Loading,Loaded:()
                 selected:this.isSelected('/'),
                 label: 'Trang Chủ',
                 icon: HomeMajorMonotone,
-                onClick: () => this.goTo('/'),
-              
               },
               {
-                url:'orders',               
+                url:'/orders',               
                 selected:this.isSelected('/orders'),
                 label: 'Đơn Hàng',
                 icon: OrdersMajorTwotone,
-                onClick: ()=> this.goTo('/orders'),
                 badge: '20',
                 subNavigationItems: [
                   {
-                    url: 'orders',
+                    url: '/orders',
                     label: 'Tất cả đơn hàng',
-                    // onClick: ()=> this.goTo('/orders'), 
                     matches: this.isSelected('/orders')
                                      
                   },
                   {
                     url:'/draft_orders',
                     label: 'Drafts',
-                    // onClick: ()=> this.goTo('/draft_orders'),
                     matches:this.isSelected('/draft_orders')
                   }
                 ]               
               },
               {
-                url: 'products',
+                url: '/products',
                 selected: this.isSelected('/products'),
                 label: 'Sản phẩm',
                 icon: ProductsMajorMonotone,
-                onClick: () => this.goTo('/products')
               },
               {
-                url: 'customers',
+                url: '/customers',
                 label: 'Khách hàng',
                 icon: CustomersMajorMonotone,
                 selected: this.isSelected('/customers'),
-                onClick: ()=> this.goTo('/customers')
               },
               {
-                url: 'dashboard',
+                url: '/dashboard',
                 label: 'Thống kê',
                 icon: AnalyticsMajorMonotone,
                 selected: this.isSelected('/dashboard'),
-                onClick: ()=> this.goTo('/dashboard')
               }
             ]}
             action={{

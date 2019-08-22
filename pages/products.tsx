@@ -10,11 +10,10 @@ class Products extends React.Component {
   render() {
     
     return(
-    <AppLayout>  
+    <AppLayout title="Sản phẩm của bạn">  
       <Page title="Sản phẩm">
         <p>PageContent</p>
       </Page> 
-      
     </AppLayout>
     );
   }

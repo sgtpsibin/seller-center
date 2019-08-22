@@ -16,13 +16,13 @@ html {
 
 body {   
     font-size: 16px !important;
-}
-body a {
-    color: var(--dark-color);
-    text-decoration: none;
-    &:hover {
+    & a {
         color: var(--dark-color);
         text-decoration: none;
+        &:hover {
+            color: var(--dark-color);
+            text-decoration: none;
+        }
     }
 }
 

@@ -1,19 +1,28 @@
 import React from 'react';
 import {Card, Frame, Layout, Loading, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer} from '@shopify/polaris';
-import NavigationBar from '../app/navigation';
 import {connect} from 'react-redux';
+import Head from 'next/head';
 
+import NavigationBar from '../app/navigation';
 import TopBarMenu from '../app/topbar';
+
 import '../../static/style/main.scss';
+import  Router from 'next/router';
 
 
 type LayoutProps = {
   showMobileNavigation:boolean,
   dispatch:any,
-  isLoading:boolean
+  isLoading:boolean,
+  title?:string
 }
 class AppLayout extends React.Component<LayoutProps> {
  
+  componentDidMount() {
+    if (!localStorage.authToken) {
+      Router.push('/login');
+    }
+  }
   render() {
    
     const topBarMarkup = (
@@ -48,7 +57,10 @@ class AppLayout extends React.Component<LayoutProps> {
     const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
 
     return (
-      <div style={{height: '500px'}}>        
+      <div style={{height: '500px'}}>  
+          <Head>
+            <title>{this.props.title ? this.props.title + " - TTS" : "SELLER CENTER - TTS"}</title>
+          </Head>      
           <Frame
             topBar={topBarMarkup}
             navigation={navigationMarkup}

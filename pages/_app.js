@@ -1,4 +1,5 @@
 import App from 'next/app'
+import Link from 'next/link';
 import React from 'react'
 import { Provider } from 'react-redux'
 import { AppProvider} from '@shopify/polaris';
@@ -22,6 +23,20 @@ const theme = {
   },
 };
 
+const CustomLinkComponent = ({children, url, ...rest}) => {
+  return (
+    <Link
+      href={url}
+    >
+      <a
+      {...rest}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+};
+
 class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {
     let pageProps = {}
@@ -37,7 +52,7 @@ class MyApp extends App {
     const { Component, pageProps, store } = this.props
     return (
       <Provider store={store}>
-        <AppProvider theme={theme}>
+        <AppProvider theme={theme} linkComponent={CustomLinkComponent}>
           <Component {...pageProps} />
         </AppProvider>
       </Provider>

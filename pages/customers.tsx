@@ -8,11 +8,10 @@ class CustomerPage extends React.Component {
   render() {
     
     return(
-    <AppLayout>  
+    <AppLayout title="Quản lý khách hàng">  
       <Page title="Khách hàng">
         <p>Page Content</p>
-      </Page> 
-      
+      </Page>       
     </AppLayout>
     );
   }

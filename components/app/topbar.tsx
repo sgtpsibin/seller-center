@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActionList, Card, Frame, TopBar} from '@shopify/polaris';
+import {ActionList, Card, TopBar} from '@shopify/polaris';
 import {ArrowLeftMinor} from '@shopify/polaris-icons';
 import {connect} from 'react-redux';
 
@@ -18,8 +18,7 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
     userMenuOpen: false,
     searchActive: false,
     showMobileNavigation:false,
-    searchText: '',
-    
+    searchText: '',    
   };
 
   render() {
@@ -69,20 +68,6 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
       />
     );
 
-    // const topBarMarkup = (
-    //   <TopBar
-    //     showNavigationToggle={true}
-    //     userMenu={userMenuMarkup}
-    //     searchResultsVisible={searchActive}
-    //     searchField={searchFieldMarkup}
-    //     searchResults={searchResultsMarkup}
-    //     onSearchResultsDismiss={handleSearchResultsDismiss}
-    //     onNavigationToggle={() => {
-    //       console.log('toggle navigation visibility');
-    //     }}
-    //   />
-    // );
-
     return (
       <TopBar
         showNavigationToggle={true}
@@ -92,8 +77,7 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
         searchResults={searchResultsMarkup}
         onSearchResultsDismiss={handleSearchResultsDismiss}
         onNavigationToggle={this.props.tooglenav}
-      />
-      
+      />      
     );
   }
 
@@ -117,9 +101,7 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
     } else {
       this.setState({searchActive: false});
     }
-  };
-
-  
+  };  
 }
 
 const mapDispatchToProps = (dispatch) => {
