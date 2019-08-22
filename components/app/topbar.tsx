@@ -36,6 +36,7 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
         actions={[
           {
             items: [{content: 'Back to Shopify', icon: ArrowLeftMinor}],
+            
           },
           {
             items: [{content: 'Community forums'}],

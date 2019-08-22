@@ -1,13 +1,14 @@
 import React from 'react';
 import { Page } from '@shopify/polaris';
+import { connect } from 'react-redux';
 
 import AppLayout from '../components/library/layout';
 
-class Orders extends React.Component {
+class Orders extends React.Component<{user:any}> {
 
   
   render() {
-    
+    console.log(this.props.user);
     return(
     <AppLayout title="Quản lý đơn hàng">  
       <Page title="Đơn hàng">
@@ -17,4 +18,10 @@ class Orders extends React.Component {
     );
   }
 }
-export default Orders;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps)(Orders);

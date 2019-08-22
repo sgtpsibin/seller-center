@@ -1,12 +1,17 @@
 import Head from 'next/head'
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Router from 'next/router';
 
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import '../static/style/main.scss';
 
-class LoginPage extends Component {
+type Props = {
+    getUserData: any
+}
+class LoginPage extends Component<Props> {
 
     state = {
         email: '',
@@ -30,11 +35,33 @@ class LoginPage extends Component {
     login = async (event) => {
         event.preventDefault();
         const {email,password} = this.state;
+        if (!email || !password) return;
+        
         try {
             const res = await axios.post(process.env.AUTH_API,{email,password});
-            console.log(res);
+            if (res.status === 200) {
+                const {access_token,refresh_token,expires_at,first_name,full_name,last_name} = res.data.data;
+                const {email,id,name,slug} = res.data.data.shop;
+                localStorage.authToken = access_token;
+                localStorage.refreshToken = refresh_token;
+                localStorage.expriedTime = expires_at;
+                const userData = {
+                    first_name,
+                    full_name,
+                    last_name,
+                    email,
+                    id,
+                    shop_name:name,
+                    slug
+                };
+
+                toast.success('Đăng nhập thành công');
+
+                setTimeout(()=>Router.push('/'),800);
+            }
         } catch (error) {
-            console.log(error);            
+            console.log(error);    
+            toast.error('Sai thông tin đăng nhập');        
         }
 
     }
@@ -46,6 +73,7 @@ class LoginPage extends Component {
                     <title>SELLER CENTER LOGIN</title>
                 </Head>
                 <div className="login-page">
+                    <ToastContainer position="top-center" hideProgressBar={true} autoClose={2000}/> 
                     <div className="login-form mx-auto bg-white rounded shadow">
                         <img className="rounded-circle" src="/static/images/logo.png" alt="TTS Login Page"/>
                         <h1 className="text-center mt-5">ĐĂNG NHẬP SELLER CENTER</h1>
@@ -71,7 +99,5 @@ class LoginPage extends Component {
         );
     }
 }
-
-
 
 export default LoginPage;

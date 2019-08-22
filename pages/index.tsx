@@ -34,8 +34,7 @@ class Index extends React.Component<{hasAuth:boolean}> {
       </Page>      
     </AppLayout>
     );
-   const indexPage =  renderHomePage ;
-    
+   const indexPage =  renderHomePage ;    
     return(
       <>
         {indexPage}

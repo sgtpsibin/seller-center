@@ -1,9 +1,10 @@
 // next.config.js
-const withSass = require('@zeit/next-sass')
+const withSass = require('@zeit/next-sass');
+const withCSS = require('@zeit/next-css');
 require('dotenv').config()
 const webpack = require('webpack')
 
-module.exports = withSass({
+module.exports = withCSS(withSass({
   /* config options here */
   webpack: (config) => {
     config.plugins.push(
@@ -11,6 +12,6 @@ module.exports = withSass({
     )
     return config
   }
-})
+}));
 
 
