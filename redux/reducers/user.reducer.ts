@@ -1,13 +1,15 @@
-import { GET_USER_DATA } from '../actions/actionTypes';
+import { RECEIVE_USER_DATA } from '../actions/actionTypes';
 
 const initialState = {
-    
+    shop:{},
+    user:{}
 }
 
-const userReducer = (state={},action) => {
+const userReducer = (state=initialState,action) => {
     switch (action.type) {
-        case GET_USER_DATA:            
-            return {...state,...action.payload};
+        
+        case RECEIVE_USER_DATA:            
+            return {...state,shop:action.payload.shop,user:action.payload.user}
     
         default:
             return state;

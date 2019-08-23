@@ -9,19 +9,26 @@ import TopBarMenu from '../app/topbar';
 import '../../static/style/main.scss';
 import  Router from 'next/router';
 
-
 type LayoutProps = {
   showMobileNavigation:boolean,
   dispatch:any,
   isLoading:boolean,
-  title?:string
+  title?:string,
+  getUserData:any,
+  toogleNav:any,
+  user:any
 }
 class AppLayout extends React.Component<LayoutProps> {
  
   componentDidMount() {
     if (!localStorage.authToken) {
       Router.push('/login');
+    } else {
+      if(Object.entries(this.props.user).length === 0 && this.props.user.constructor === Object){
+        this.props.getUserData();
+      }
     }
+
   }
   render() {
    
@@ -55,7 +62,7 @@ class AppLayout extends React.Component<LayoutProps> {
     );
 
     const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
-
+    
     return (
       <div style={{height: '500px'}}>  
           <Head>
@@ -65,7 +72,7 @@ class AppLayout extends React.Component<LayoutProps> {
             topBar={topBarMarkup}
             navigation={navigationMarkup}
             showMobileNavigation={this.props.showMobileNavigation}
-            onNavigationDismiss={()=>{this.props.dispatch({type:'TOOGLE_NAVIGATION'})}}
+            onNavigationDismiss={this.props.toogleNav}
           >          
             {loadingMarkup}
             {pageMarkup}
@@ -102,7 +109,15 @@ class AppLayout extends React.Component<LayoutProps> {
 const mapStateToProps = (state) => {
   return {
     showMobileNavigation: state.layout.showMobileNavigation,
-    isLoading: state.layout.isLoading
+    isLoading: state.layout.isLoading,
+    user: state.user.user,
   }
 }
-export default connect(mapStateToProps)(AppLayout);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserData: () => dispatch({type:'REQUEST_USER_DATA'}),
+    toogleNav: () => dispatch({type:'TOOGLE_NAVIGATION'})
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(AppLayout);

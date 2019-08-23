@@ -8,7 +8,6 @@ class Orders extends React.Component<{user:any}> {
 
   
   render() {
-    console.log(this.props.user);
     return(
     <AppLayout title="Quản lý đơn hàng">  
       <Page title="Đơn hàng">

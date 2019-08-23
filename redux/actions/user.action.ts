@@ -1,5 +1,3 @@
-import { GET_USER_DATA } from './actionTypes';
+import { REQUEST_USER_DATA, RECEIVE_USER_DATA } from './actionTypes';
 
-export const getUserData = (UserData) => (dispatch) =>{
-    dispatch({type:GET_USER_DATA,payload:UserData});
-}
+export const receiveUserData = userData => ({type:RECEIVE_USER_DATA,payload:userData}); 

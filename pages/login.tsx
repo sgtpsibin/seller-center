@@ -15,7 +15,8 @@ class LoginPage extends Component<Props> {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        loading: false
     }
 
     componentDidMount() {
@@ -39,6 +40,7 @@ class LoginPage extends Component<Props> {
         
         try {
             const res = await axios.post(process.env.AUTH_API,{email,password});
+            
             if (res.status === 200) {
                 const {access_token,refresh_token,expires_at,first_name,full_name,last_name} = res.data.data;
                 const {email,id,name,slug} = res.data.data.shop;
@@ -56,15 +58,22 @@ class LoginPage extends Component<Props> {
                 };
 
                 toast.success('Đăng nhập thành công');
-
                 setTimeout(()=>Router.push('/'),800);
             }
         } catch (error) {
             console.log(error);    
-            toast.error('Sai thông tin đăng nhập');        
+            toast.error('Sai thông tin đăng nhập'); 
         }
 
     }
+
+    spinnerLoading = (
+        <div className="spinner-border text-warning" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>
+    )
+
+    renderLoginText = this.state.loading ? this.spinnerLoading : 'Login';
 
     render() {
         return(
@@ -73,7 +82,7 @@ class LoginPage extends Component<Props> {
                     <title>SELLER CENTER LOGIN</title>
                 </Head>
                 <div className="login-page">
-                    <ToastContainer position="top-center" hideProgressBar={true} autoClose={2000}/> 
+                    <ToastContainer position="top-center" hideProgressBar={true} autoClose={5000}/> 
                     <div className="login-form mx-auto bg-white rounded shadow">
                         <img className="rounded-circle" src="/static/images/logo.png" alt="TTS Login Page"/>
                         <h1 className="text-center mt-5">ĐĂNG NHẬP SELLER CENTER</h1>
@@ -90,7 +99,7 @@ class LoginPage extends Component<Props> {
                                     <label htmlFor="password"><b>Password:</b></label>
                                     <input onChange={this.handleChange} id="password" type="password" className="form-control" placeholder="Password"/>
                                 </div>
-                                <button type="submit" className="btn d-block mx-auto mt-5">Login</button>                      
+                                <button type="submit" className="btn d-block mx-auto mt-5">{this.renderLoginText}</button>                      
                             </form>
                         </div>
                     </div>
