@@ -5,8 +5,8 @@ import Router from 'next/router';
 import axios from 'axios';
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 import '../static/style/main.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
     getUserData: any
@@ -20,7 +20,7 @@ class LoginPage extends Component<Props> {
     }
 
     componentDidMount() {
-        if (localStorage.authToken) {
+        if (localStorage.authToken && (localStorage.expiredTime <= Date.now())) {
             Router.push('/');
         }
     }
@@ -42,21 +42,11 @@ class LoginPage extends Component<Props> {
             const res = await axios.post(process.env.AUTH_API,{email,password});
             
             if (res.status === 200) {
-                const {access_token,refresh_token,expires_at,first_name,full_name,last_name} = res.data.data;
-                const {email,id,name,slug} = res.data.data.shop;
+                const {access_token,refresh_token,expires_at} = res.data.data;
+
                 localStorage.authToken = access_token;
                 localStorage.refreshToken = refresh_token;
-                localStorage.expriedTime = expires_at;
-                const userData = {
-                    first_name,
-                    full_name,
-                    last_name,
-                    email,
-                    id,
-                    shop_name:name,
-                    slug
-                };
-
+                localStorage.expiredTime = expires_at;           
                 toast.success('Đăng nhập thành công');
                 setTimeout(()=>Router.push('/'),800);
             }
@@ -64,7 +54,6 @@ class LoginPage extends Component<Props> {
             console.log(error);    
             toast.error('Sai thông tin đăng nhập'); 
         }
-
     }
 
     spinnerLoading = (

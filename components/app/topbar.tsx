@@ -1,23 +1,23 @@
 import React from 'react';
 import {ActionList, Card, TopBar} from '@shopify/polaris';
-import {ArrowLeftMinor} from '@shopify/polaris-icons';
+import {ArrowLeftMinor, OutgoingMajorMonotone} from '@shopify/polaris-icons';
 import {connect} from 'react-redux';
+import Router from 'next/router';
 
 type TopBarState ={
     userMenuOpen: boolean,
     searchActive: boolean,
     searchText: string,
-    showMobileNavigation:boolean
 }
 type TopBarProps = {
-  tooglenav: any
+  tooglenav: any,
+  shop: any
 }
 
 class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
   state = {
     userMenuOpen: false,
     searchActive: false,
-    showMobileNavigation:false,
     searchText: '',    
   };
 
@@ -29,21 +29,26 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
       toggleUserMenu,
     } = this;
     const {userMenuOpen, searchText, searchActive} = state;
+    
+    const {shop} = this.props;
 
+    const logout = () => {
+      localStorage.clear();
+      Router.push('/login');
+    }
 
     const userMenuMarkup = (
       <TopBar.UserMenu
         actions={[
           {
-            items: [{content: 'Back to Shopify', icon: ArrowLeftMinor}],
-            
+            items: [{content: 'Về trang chủ', icon: ArrowLeftMinor,url:'https://thitruongsi.com'}],            
           },
           {
-            items: [{content: 'Community forums'}],
+            items: [{content: 'Đăng xuất',icon:OutgoingMajorMonotone,onAction:logout}],
           },
         ]}
-        name="Dharma"
-        detail="Jaded Pixel"
+        name={shop.name}
+        detail="TTS SELLER"
         initials="QA"
         open={userMenuOpen}
         onToggle={toggleUserMenu}
@@ -105,9 +110,15 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
   };  
 }
 
+const mapStateToProps = (state) => {
+  return {
+    shop: state.user.shop
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     tooglenav: () => dispatch({type:'TOOGLE_NAVIGATION'})
   }
 }
-export default connect(null,mapDispatchToProps)(TopBarMenu);
+export default connect(mapStateToProps,mapDispatchToProps)(TopBarMenu);

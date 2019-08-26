@@ -16,5 +16,6 @@ export function* getUserData() {
         yield put(receiveUserData(userData));
     } catch (e) {
         console.log(e);
+
     }
 }

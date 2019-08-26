@@ -17,7 +17,7 @@ type Props = {
   Loading:()=>any,
   Loaded: () => any
 }
-class NavigationBar extends React.Component<Props> {    
+class NavigationBar extends React.PureComponent<Props> {    
 
     toggleState = (key) => {
         return () => {
@@ -25,15 +25,18 @@ class NavigationBar extends React.Component<Props> {
         };
     };  
 
-    routerConfig = () => {
-      Router.events.on('routeChangeStart',()=>{
-        this.props.Loading();
-      });
-      Router.events.on('routeChangeComplete',()=>{
-        this.props.Loaded();
-      });
-      return;      
-    }
+    // routerConfig = () => {
+    //   Router.events.on('routeChangeStart',()=>{
+    //     this.props.Loading();
+    //   });
+    //   Router.events.on('routeChangeComplete',()=>{
+    //     this.props.Loaded();
+    //   });
+    //   Router.events.on('routeChangeError',()=>{
+    //     this.props.Loaded();
+    //   })
+    //   return;      
+    // }
     
     isSelected = (url:string):boolean => {
       if (this.props.router.pathname===url) {
@@ -42,7 +45,7 @@ class NavigationBar extends React.Component<Props> {
       return false;
     }
   render() {
-    this.routerConfig();
+    // this.routerConfig();
     return (
       <Navigation location="">
           <Navigation.Section        
