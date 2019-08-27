@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import AppLayout from '../components/library/layout';
 import OrderResourceList from '../components/app/resourceList/Orders';
 
-type Props = {user:any,orders:any,fetchOrders:any};
+type Props = {user:any,fetchOrders:any,orders?:any};
 
 class Orders extends React.Component<Props> {
 
   componentDidMount() {
-    this.props.fetchOrders();
+    if(this.props.orders.length===0) this.props.fetchOrders();
   }
 
   state = {
@@ -23,31 +23,30 @@ class Orders extends React.Component<Props> {
   
   render() {
 
-    console.log(this.props.orders);
 
     const {tabSelected} = this.state;
     
     const tabs = [
       {
-        id: 'all-customers',
+        id: 'all-orders',
         content: 'All',
-        accessibilityLabel: 'All customers',
-        panelID: 'all-customers-content',
+        accessibilityLabel: 'All orders',
+        panelID: 'all-orders',
       },
       {
-        id: 'accepts-marketing',
-        content: 'Accepts marketing',
-        panelID: 'accepts-marketing-content',
+        id: 'open-orders',
+        content: 'Open',
+        panelID: 'open-orders',
       },
       {
-        id: 'repeat-customers',
-        content: 'Repeat customers',
-        panelID: 'repeat-customers-content',
+        id: 'unfulfilled-and-partially-fulfilled',
+        content: 'Unfulfilled and partially fulfilled',
+        panelID: 'unfulfilled-and-partially-fulfilled',
       },
       {
-        id: 'prospects',
-        content: 'Prospects',
-        panelID: 'prospects-content',
+        id: 'unpaid',
+        content: 'Unpaid',
+        panelID: 'unpaid',
       },
     ];
     return(
@@ -57,8 +56,7 @@ class Orders extends React.Component<Props> {
           breadcrumbs={[{content: 'Trang Chủ', url: '/'}]}
         >
           <Card>
-            <Tabs tabs={tabs} selected={tabSelected} onSelect={this.handleTabChange}>
-             
+            <Tabs tabs={tabs} selected={tabSelected} onSelect={this.handleTabChange}>             
                 <OrderResourceList/>
             </Tabs>
           </Card>
@@ -77,8 +75,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
     orders: state.orders
   }
 }
+
 export default connect(mapStateToProps,mapDispatchToProps)(Orders);

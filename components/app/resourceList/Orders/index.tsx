@@ -1,31 +1,29 @@
 import React from 'react';
-import {Avatar, Card, FilterType, ResourceList, Select, TextField, TextStyle} from '@shopify/polaris';
-import { Filter } from '@shopify/polaris/types';
+import {Card, ResourceList} from '@shopify/polaris';
 
 import OrderItem from './orderItem';
 import OrderFilter from './filter';
 
-export default class OrderResourceList extends React.Component {
+import { connect } from 'react-redux';
+
+type Props = {
+  orders?:any
+}
+
+class OrderResourceList extends React.Component<Props> {
   state = {
     selectedItems: [],
-    sortValue: 'DATE_MODIFIED_DESC',
-    searchValue: '',
-    appliedFilters: [
-      {
-        key: 'accountStatusFilter',
-        value: 'Account enabled',
-      },
-    ],
+    // searchValue: ''
   };
-  handleSearchChange = (searchValue) => {
-    this.setState({searchValue});
-  };
-  handleFiltersChange = (appliedFilters) => {
-    this.setState({appliedFilters});
-  };
-  handleSortChange = (sortValue) => {
-    this.setState({sortValue});
-  };
+  // handleSearchChange = (searchValue) => {
+  //   this.setState({searchValue});
+  // };
+  // handleFiltersChange = (appliedFilters) => {
+  //   this.setState({appliedFilters});
+  // };
+  // handleSortChange = (sortValue) => {
+  //   this.setState({sortValue});
+  // };
   handleSelectionChange = (selectedItems) => {
     this.setState({selectedItems});
   };
@@ -34,25 +32,10 @@ export default class OrderResourceList extends React.Component {
 
   render() {
     const resourceName = {
-      singular: 'customer',
-      plural: 'customers',
+      singular: 'order',
+      plural: 'orders',
     };
-    const items = [
-      {
-        id: 341,
-        url: 'customers/341',
-        name: 'Mae Jemison',
-        location: 'Decatur, USA',
-        latestOrderUrl: 'orders/1456',
-      },
-      {
-        id: 256,
-        url: 'customers/256',
-        name: 'Ellen Ochoa',
-        location: 'Los Angeles, USA',
-        latestOrderUrl: 'orders/1457',
-      },
-    ];
+    const items = this.props.orders||[];
     
     const bulkActions = [
       {
@@ -64,21 +47,7 @@ export default class OrderResourceList extends React.Component {
         onAction: () => console.log('Todo: implement bulk remove tags'),
       }
     ];
-    const filters:Filter[] = [
-      {
-        key: 'orderCountFilter',
-        label: 'Number of orders',
-        operatorText: 'is greater than',
-        type: FilterType.TextField,
-      },
-      {
-        key: 'accountStatusFilter',
-        label: 'Account status',
-        operatorText: 'is',
-        type: FilterType.Select,
-        options: ['Enabled', 'Invited', 'Not invited', 'Declined'],
-      },
-    ];
+    
     const filterControl = (
       // <ResourceList.FilterControl
       //   filters={filters}
@@ -93,6 +62,8 @@ export default class OrderResourceList extends React.Component {
       // />
       <OrderFilter/>
     );
+    console.log(this.props.orders);
+
     return (
       <Card>
         <ResourceList
@@ -103,18 +74,16 @@ export default class OrderResourceList extends React.Component {
           onSelectionChange={this.handleSelectionChange}
           // promotedBulkActions={promotedBulkActions}
           bulkActions={bulkActions}
-          sortValue={this.state.sortValue}
-          sortOptions={[
-            {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
-            {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'},
-          ]}
-          onSortChange={(selected) => {
-            this.setState({sortValue: selected});
-            console.log(`Sort option changed to ${selected}.`);
-          }}
           filterControl={filterControl}
+          showHeader={false}          
         />
       </Card>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    orders: state.orders
+  }
+}
+export default connect(mapStateToProps)(OrderResourceList);
