@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import AppLayout from '../components/library/layout';
 import OrderResourceList from '../components/app/resourceList/Orders';
 
-class Orders extends React.Component<{user:any}> {
+type Props = {user:any,orders:any,fetchOrders:any};
+
+class Orders extends React.Component<Props> {
+
+  componentDidMount() {
+    this.props.fetchOrders();
+  }
 
   state = {
     tabSelected: 0
@@ -16,6 +22,8 @@ class Orders extends React.Component<{user:any}> {
   };
   
   render() {
+
+    console.log(this.props.orders);
 
     const {tabSelected} = this.state;
     
@@ -43,27 +51,34 @@ class Orders extends React.Component<{user:any}> {
       },
     ];
     return(
-    <AppLayout title="Quản lý đơn hàng">  
-      <Page 
-        title="Đơn hàng"
-        breadcrumbs={[{content: 'Trang Chủ', url: '/'}]}
-      >
-        <Card>
-          <Tabs tabs={tabs} selected={tabSelected} onSelect={this.handleTabChange}>
-            <Card.Section title={tabs[tabSelected].content}>
-              <OrderResourceList/>
-            </Card.Section>
-          </Tabs>
-        </Card>
-      </Page>       
-    </AppLayout>
+      <AppLayout title="Quản lý đơn hàng">  
+        <Page 
+          title="Đơn hàng"
+          breadcrumbs={[{content: 'Trang Chủ', url: '/'}]}
+        >
+          <Card>
+            <Tabs tabs={tabs} selected={tabSelected} onSelect={this.handleTabChange}>
+             
+                <OrderResourceList/>
+            </Tabs>
+          </Card>
+        </Page>       
+      </AppLayout>
     );
+  }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOrders: () => dispatch({type:'REQUEST_ORDERS'})
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    orders: state.orders
   }
 }
-export default connect(mapStateToProps)(Orders);
+export default connect(mapStateToProps,mapDispatchToProps)(Orders);

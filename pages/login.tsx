@@ -20,7 +20,7 @@ class LoginPage extends Component<Props> {
     }
 
     componentDidMount() {
-        if (localStorage.authToken && (localStorage.expiredTime <= Date.now())) {
+        if (localStorage.authToken) {
             Router.push('/');
         }
     }
