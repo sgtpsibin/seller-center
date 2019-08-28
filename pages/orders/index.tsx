@@ -2,12 +2,13 @@ import React from 'react';
 import { Page, Tabs, Card } from '@shopify/polaris';
 import { connect } from 'react-redux';
 
-import AppLayout from '../components/library/layout';
-import OrderResourceList from '../components/app/resourceList/Orders';
+import AppLayout from '../../components/library/layout';
+import OrderResourceList from '../../components/app/resourceList/Orders';
 
 type Props = {user:any,fetchOrders:any,orders?:any};
 
 class Orders extends React.Component<Props> {
+
 
   componentDidMount() {
     if(this.props.orders.length===0) this.props.fetchOrders();
@@ -16,6 +17,7 @@ class Orders extends React.Component<Props> {
   state = {
     tabSelected: 0
   };
+
 
   handleTabChange = (selectedTabIndex) => {
     this.setState({tabSelected: selectedTabIndex});

@@ -23,6 +23,10 @@ app.prepare().then(() => {
         });
     }
 
+  // server.get('/orders/:id',(req,res)=>{
+  //   app.render(req,res,'/orders/[oid]',{id: req.params.id})
+  // });
+
   server.all('*', (req, res) => {
     return handle(req, res)
   });

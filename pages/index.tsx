@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {Page,Card,Icon} from '@shopify/polaris';
 import Link from 'next/link';
 import {
@@ -8,7 +9,11 @@ import {
 
 import AppLayout from '../components/library/layout';
 
-class Index extends React.Component<{hasAuth:boolean}> {
+class Index extends React.Component<{hasAuth:boolean,orders:any,fetchOrders:any}> {
+
+  componentDidMount() {
+    if(this.props.orders.length===0) this.props.fetchOrders();
+  }
 
   render() {
     const  renderHomePage = (
@@ -20,12 +25,12 @@ class Index extends React.Component<{hasAuth:boolean}> {
               <Card title='' sectioned subdued>
                 <div className="order-notifications">
                   <Icon source={OrdersMajorMonotone} color="orange"/>
-                  <p><b>23 orders</b> to fullfill</p>
+                  <p><b>{this.props.orders.length||'__'} orders</b> to fulfill</p>
                 </div>
                 <hr/>
                 <div className="order-notifications">
                   <Icon source={PaymentsMajorMonotone} color="orange"/>
-                  <p><b>29 payments</b> to capture</p>
+                  <p><b>{this.props.orders.length||'__'} payments</b> to capture</p>
                 </div>
               </Card>
             </a>
@@ -42,4 +47,14 @@ class Index extends React.Component<{hasAuth:boolean}> {
     );
   }
 }
-export default Index;
+const mapStateToProps = (state) => {
+  return {
+    orders: state.orders,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOrders: () => dispatch({type:'REQUEST_ORDERS'})
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Index);

@@ -6,7 +6,6 @@ import AppLayout from '../components/library/layout';
 class Draft_Orders extends Component {
   
   render() {
-    
     return(
     <AppLayout>  
       <Page title="Draft Orders">

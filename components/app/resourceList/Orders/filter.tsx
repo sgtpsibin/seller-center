@@ -18,7 +18,7 @@ export default class OrderFilters extends React.Component {
     const filters = [{
       key: 'orderStatus',
       label: 'Status',
-      filter: <ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'Open' }, { label: 'Archived', value: 'Archived'}, { label: 'Canceled', value: 'Canceled' }]} selected={orderStatus || []} onChange={this.handleChange('orderStatus')} />,
+      filter: <div className="Polaris-Filters__orderStatus"><ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'Open' }, { label: 'Archived', value: 'Archived'}, { label: 'Canceled', value: 'Canceled' }]} selected={orderStatus || []} onChange={this.handleChange('orderStatus')} /></div>,
       shortcut: true
     }, {
       key: 'paymentStatus',
@@ -53,10 +53,10 @@ export default class OrderFilters extends React.Component {
             focused={true}>
               <div className="d-flex flex-row">
                 <div className="mx-3">
-                  <Button icon={StarOutlineMinor}>Save</Button>
+                  <Button icon={StarOutlineMinor}></Button>
                 </div>
                 <div className="mr-2">
-                  <Button icon={SortMinor}>Sort</Button>
+                  <Button icon={SortMinor}></Button>
                 </div>
               </div>
               

@@ -39,7 +39,8 @@ class NavigationBar extends React.PureComponent<Props> {
     // }
     
     isSelected = (url:string):boolean => {
-      if (this.props.router.pathname===url) {
+      const { pathname } = this.props.router;
+      if (pathname===url) {
         return true;
       }
       return false;
@@ -64,7 +65,7 @@ class NavigationBar extends React.PureComponent<Props> {
                 badge: '20',
                 subNavigationItems: [
                   {
-                    url: '/orders',
+                    url: '/orders/',
                     label: 'Tất cả đơn hàng',
                     matches: this.isSelected('/orders')
                                      

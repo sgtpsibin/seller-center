@@ -7,23 +7,15 @@ import OrderFilter from './filter';
 import { connect } from 'react-redux';
 
 type Props = {
-  orders?:any
+  orders?:any,
+  loading:boolean
 }
 
 class OrderResourceList extends React.Component<Props> {
   state = {
     selectedItems: [],
-    // searchValue: ''
   };
-  // handleSearchChange = (searchValue) => {
-  //   this.setState({searchValue});
-  // };
-  // handleFiltersChange = (appliedFilters) => {
-  //   this.setState({appliedFilters});
-  // };
-  // handleSortChange = (sortValue) => {
-  //   this.setState({sortValue});
-  // };
+  
   handleSelectionChange = (selectedItems) => {
     this.setState({selectedItems});
   };
@@ -49,17 +41,7 @@ class OrderResourceList extends React.Component<Props> {
     ];
     
     const filterControl = (
-      // <ResourceList.FilterControl
-      //   filters={filters}
-      //   appliedFilters={this.state.appliedFilters}
-      //   onFiltersChange={this.handleFiltersChange}
-      //   searchValue={this.state.searchValue}
-      //   onSearchChange={this.handleSearchChange}
-      //   additionalAction={{
-      //     content: 'Save',
-      //     onAction: () => console.log('New filter saved'),
-      //   }}
-      // />
+      
       <OrderFilter/>
     );
     console.log(this.props.orders);
@@ -72,10 +54,9 @@ class OrderResourceList extends React.Component<Props> {
           renderItem={this.renderItem}
           selectedItems={this.state.selectedItems}
           onSelectionChange={this.handleSelectionChange}
-          // promotedBulkActions={promotedBulkActions}
           bulkActions={bulkActions}
           filterControl={filterControl}
-          showHeader={false}          
+          showHeader={false}    
         />
       </Card>
     );
@@ -83,7 +64,7 @@ class OrderResourceList extends React.Component<Props> {
 }
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders
+    orders: state.orders,
   }
 }
 export default connect(mapStateToProps)(OrderResourceList);

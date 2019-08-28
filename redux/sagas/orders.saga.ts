@@ -13,3 +13,15 @@ export function* fetchOrders() {
         console.log(e);
     }
 }
+
+export function* fetchOrdersWithQuery(query:string) {
+    try {
+        const respone = yield axios.get(
+                                process.env.API_ROOT_URL+'/orders.json?'+query,
+                                { headers: {"Authorization" : `Bearer ${process.env.DEV_TOKEN}`}});
+        const { orders } = respone.data;
+        yield put(addOrdersToStore(orders));
+    } catch (e) {
+        console.log(e);
+    }
+}
