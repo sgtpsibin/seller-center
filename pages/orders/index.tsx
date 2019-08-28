@@ -1,11 +1,18 @@
 import React from 'react';
 import { Page, Tabs, Card } from '@shopify/polaris';
 import { connect } from 'react-redux';
+import {withRouter} from 'next/router';
 
 import AppLayout from '../../components/library/layout';
 import OrderResourceList from '../../components/app/resourceList/Orders';
 
-type Props = {user:any,fetchOrders:any,orders?:any};
+
+type Props = {
+  user:any,
+  fetchOrders:any,
+  orders?:any,
+  router:any
+};
 
 class Orders extends React.Component<Props> {
 
@@ -81,4 +88,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Orders);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Orders));

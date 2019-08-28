@@ -3,7 +3,6 @@ import { paymentStatusBadge,fulfillmentStatusBadge } from '../../library/generat
 
 export const TitleMetadata = (props) => {
     const fullDate = new Date(props.created_at);
-    console.log(fullDate.toLocaleDateString());
     const orderDate = fullDate.toLocaleString();
     return(
         <>

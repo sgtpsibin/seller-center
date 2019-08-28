@@ -18,17 +18,17 @@ export default class OrderFilters extends React.Component {
     const filters = [{
       key: 'orderStatus',
       label: 'Status',
-      filter: <div className="Polaris-Filters__orderStatus"><ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'Open' }, { label: 'Archived', value: 'Archived'}, { label: 'Canceled', value: 'Canceled' }]} selected={orderStatus || []} onChange={this.handleChange('orderStatus')} /></div>,
+      filter: <div className="Polaris-Filters__orderStatus"><ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'open' }, { label: 'Archived', value: 'closed'}, { label: 'Canceled', value: 'cancelled' }]} selected={orderStatus || []} onChange={this.handleChange('orderStatus')} /></div>,
       shortcut: true
     }, {
       key: 'paymentStatus',
       label: 'Payment Status',
-      filter: <ChoiceList title={'Payment Status'} titleHidden choices={[{ label: 'Authorized', value: 'authorized' }, { label: 'Paid', value: 'paid'}, { label: 'Partially refunded', value: 'partially refunded' },{ label: 'Partially paid', value: 'partially paid'},{ label: 'Pending', value: 'pending'},{ label: 'Refunded', value: 'refunded'}, { label:'Unpaid',value:'unpaid' },{ label:'Voided', value:'voided'}]} selected={paymentStatus || []} onChange={this.handleChange('paymentStatus')} allowMultiple/>,
+      filter: <ChoiceList title={'Payment Status'} titleHidden choices={[{ label: 'Authorized', value: 'authorized' }, { label: 'Paid', value: 'paid'}, { label: 'Partially refunded', value: 'partially_refunded' },{ label: 'Partially paid', value: 'partially_paid'},{ label: 'Pending', value: 'pending'},{ label: 'Refunded', value: 'refunded'}, { label:'Unpaid',value:'unpaid' },{ label:'Voided', value:'voided'}]} selected={paymentStatus || []} onChange={this.handleChange('paymentStatus')} allowMultiple/>,
       shortcut: true
     },{
       key:'fulfillmentStatus',
       label: 'Fulfillment Status',
-      filter: <ChoiceList title={'Fulfillment Status'} titleHidden choices={[{ label:'Fulfilled', value:'Fulfilled'},{ label:'Unfulfilled', value:'Unfulfilled'},{ label:'Partially fulfilled',value:'Partially fulfilled'}]} selected={fulfillmentStatus||[]} onChange={this.handleChange('fulfillmentStatus')} allowMultiple/>,
+      filter: <ChoiceList title={'Fulfillment Status'} titleHidden choices={[{ label:'Fulfilled', value:'shipped'},{ label:'Unfulfilled', value:'unshipped'},{ label:'Partially fulfilled',value:'partial'}]} selected={fulfillmentStatus||[]} onChange={this.handleChange('fulfillmentStatus')} allowMultiple/>,
       shortcut: true
     }];
 
@@ -67,6 +67,7 @@ export default class OrderFilters extends React.Component {
 
   handleChange = key => value => {
     this.setState({ [key]: value });
+    console.log(value);
   };
 
   handleRemove = key => {
