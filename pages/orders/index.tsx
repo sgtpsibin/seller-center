@@ -17,7 +17,6 @@ type Props = {
 
 class Orders extends React.Component<Props> {
 
-
   componentDidMount() {
     const { query } = this.props.router;
     if(this.props.orders.length===0&&Object.entries(query).length===0)  {
@@ -28,7 +27,7 @@ class Orders extends React.Component<Props> {
       // console.log(queryString);
       this.props.fetchOrdersWithQuery(queryString);
     }
-    console.log(this.props.router.query);
+    // console.log(this.props.router.query);
   }
 
   state = {
@@ -41,6 +40,7 @@ class Orders extends React.Component<Props> {
   };
   
   render() {
+
 
 
     const {tabSelected} = this.state;

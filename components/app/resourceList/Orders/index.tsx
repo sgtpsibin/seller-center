@@ -5,15 +5,18 @@ import OrderItem from './orderItem';
 import OrderFilter from './filter';
 
 import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
 
 type Props = {
   orders?:any,
-  loading:boolean
+  loading:boolean,
+  totalOrder: number,
+  router:any
 }
 
 class OrderResourceList extends React.Component<Props> {
   state = {
-    selectedItems: [],
+    selectedItems: []
   };
   
   handleSelectionChange = (selectedItems) => {
@@ -23,11 +26,14 @@ class OrderResourceList extends React.Component<Props> {
   renderItem = (item) => <OrderItem {...item}/>;
 
   render() {
+    const {orders,totalOrder} = this.props
+    const page = this.props.router.query||1;
+    
     const resourceName = {
       singular: 'order',
       plural: 'orders',
     };
-    const items = this.props.orders||[];
+    const items = orders||[];
     
     const bulkActions = [
       {
@@ -43,6 +49,26 @@ class OrderResourceList extends React.Component<Props> {
       <OrderFilter/>
     );
 
+    ///////PAGINATION
+    const pages = Math.ceil(totalOrder/50)||1;
+    const paginate = (
+      <div className="d-block text-center mx-auto my-5">
+        <Pagination
+          hasPrevious={page-1>0}
+          onPrevious={() => {
+            console.log('Previous');
+          }}
+          hasNext={page<pages}
+          onNext={() => {
+            console.log('Next');
+          }}
+        />
+      </div>
+    );
+    const paginateControl = orders.length!==0 ? paginate : null;
+    
+    ///////////////
+
     return (
       <Card>
         <ResourceList
@@ -56,17 +82,7 @@ class OrderResourceList extends React.Component<Props> {
           showHeader={false}
           loading={this.props.loading}
         />
-        <div className="d-block text-center mx-auto my-5"><Pagination
-          hasPrevious
-          onPrevious={() => {
-            console.log('Previous');
-          }}
-          hasNext
-          onNext={() => {
-            console.log('Next');
-          }}
-        />
-        </div>
+        {paginateControl}
       </Card>
       
     );
@@ -75,7 +91,8 @@ class OrderResourceList extends React.Component<Props> {
 const mapStateToProps = (state) => {
   return {
     orders: state.orders.orders,
-    loading:state.orders.loading
+    loading:state.orders.loading,
+    totalOrder: Number.parseInt(state.orders.totalOrder)
   }
 }
-export default connect(mapStateToProps)(OrderResourceList);
+export default connect(mapStateToProps)(withRouter(OrderResourceList));

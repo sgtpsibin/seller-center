@@ -1,6 +1,6 @@
 import { RECEIVE_ORDERS } from './actionTypes';
 
-export const addOrdersToStore = (orders) => ({
+export const addOrdersToStore = (payload) => ({
     type: RECEIVE_ORDERS,
-    orders
+    payload
 });

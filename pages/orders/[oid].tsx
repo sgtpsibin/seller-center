@@ -67,10 +67,23 @@ class OrderPage extends React.PureComponent<Props,State> {
                 </Layout.Section>
                 <Layout.Section secondary>
                     <Card title="Note" sectioned>
-                    <p>No notes from customer</p>
+                        <p>No notes from customer</p>
                     </Card>
-                    <Card title="Customer" sectioned>
-                    <p>No notes from customer</p>
+                    <Card title="Customer">
+                        <Card.Section>
+                            <p>No customer</p>
+                        </Card.Section>
+                        <Card.Section title="contact information" actions={[{content:"Edit"}]}>
+                            <p>No contact information</p>
+                            <p>No phone number</p>
+                        </Card.Section>
+                        <Card.Section title="shipping address" actions={[{content:"Edit"}]}>
+                            <p>No shipping address</p>
+                        </Card.Section>
+                        <Card.Section title="billing address" actions={[{content:"Edit"}]}>
+                            <p>No billing address</p>
+                        </Card.Section>
+                        
                     </Card>
                 </Layout.Section>
                 </Layout>
