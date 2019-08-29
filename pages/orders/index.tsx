@@ -10,6 +10,7 @@ import OrderResourceList from '../../components/app/resourceList/Orders';
 type Props = {
   user:any,
   fetchOrders:any,
+  fetchOrdersWithQuery:any,
   orders?:any,
   router:any
 };
@@ -18,7 +19,16 @@ class Orders extends React.Component<Props> {
 
 
   componentDidMount() {
-    if(this.props.orders.length===0) this.props.fetchOrders();
+    const { query } = this.props.router;
+    if(this.props.orders.length===0&&Object.entries(query).length===0)  {
+      this.props.fetchOrders();
+    }
+    if(Object.entries(query).length!==0) {
+      const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&');
+      // console.log(queryString);
+      this.props.fetchOrdersWithQuery(queryString);
+    }
+    console.log(this.props.router.query);
   }
 
   state = {
@@ -78,13 +88,14 @@ class Orders extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrders: () => dispatch({type:'REQUEST_ORDERS'})
+    fetchOrders: () => dispatch({type:'REQUEST_ORDERS'}),
+    fetchOrdersWithQuery: (query) => dispatch({type:'REQUEST_ORDERS_WITH_QUERY',query})
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders
+    orders: state.orders.orders
   }
 }
 

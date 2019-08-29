@@ -49,7 +49,7 @@ class Index extends React.Component<{hasAuth:boolean,orders:any,fetchOrders:any}
 }
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders,
+    orders: state.orders.orders,
   }
 }
 const mapDispatchToProps = (dispatch) => {

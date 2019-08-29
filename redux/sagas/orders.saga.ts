@@ -4,9 +4,11 @@ import { addOrdersToStore } from '../actions/orders.action';
 
 export function* fetchOrders() {
     try {
+        yield put({type:'LOADING_ORDERS'});
         const respone = yield axios.get(
                                 process.env.API_ROOT_URL+'/orders.json',
                                 { headers: {"Authorization" : `Bearer ${process.env.DEV_TOKEN}`} });
+                                console.log(respone);
         const { orders } = respone.data;
         yield put(addOrdersToStore(orders));
     } catch (e) {
@@ -14,8 +16,11 @@ export function* fetchOrders() {
     }
 }
 
-export function* fetchOrdersWithQuery(query:string) {
+export function* fetchOrdersWithQuery(action) {
+    const {query} = action;
     try {
+        console.log(query);
+        yield put({type:'LOADING_ORDERS'});
         const respone = yield axios.get(
                                 process.env.API_ROOT_URL+'/orders.json?'+query,
                                 { headers: {"Authorization" : `Bearer ${process.env.DEV_TOKEN}`}});

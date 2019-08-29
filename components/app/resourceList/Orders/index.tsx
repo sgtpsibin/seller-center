@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, ResourceList} from '@shopify/polaris';
+import {Card, ResourceList,Pagination} from '@shopify/polaris';
 
 import OrderItem from './orderItem';
 import OrderFilter from './filter';
@@ -39,12 +39,9 @@ class OrderResourceList extends React.Component<Props> {
         onAction: () => console.log('Todo: implement bulk remove tags'),
       }
     ];
-    
-    const filterControl = (
-      
+    const filterControl = (      
       <OrderFilter/>
     );
-    console.log(this.props.orders);
 
     return (
       <Card>
@@ -56,15 +53,29 @@ class OrderResourceList extends React.Component<Props> {
           onSelectionChange={this.handleSelectionChange}
           bulkActions={bulkActions}
           filterControl={filterControl}
-          showHeader={false}    
+          showHeader={false}
+          loading={this.props.loading}
         />
+        <div className="d-block text-center mx-auto my-5"><Pagination
+          hasPrevious
+          onPrevious={() => {
+            console.log('Previous');
+          }}
+          hasNext
+          onNext={() => {
+            console.log('Next');
+          }}
+        />
+        </div>
       </Card>
+      
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders,
+    orders: state.orders.orders,
+    loading:state.orders.loading
   }
 }
 export default connect(mapStateToProps)(OrderResourceList);
