@@ -19,7 +19,6 @@ import { TitleMetadata } from '../../components/app/OrderPage/titleMetadata';
 import AppLayout from '../../components/library/layout';
 
 type Props = {
-    router: any,
     query:any,
     url:any
 }
@@ -29,6 +28,10 @@ type State = {
 
 }
 class OrderPage extends React.PureComponent<Props,State> {
+
+    static async getInitialProps({query}) {
+        return {query}
+    }
     
     state = {
         order: {
@@ -52,7 +55,7 @@ class OrderPage extends React.PureComponent<Props,State> {
     
     componentDidMount() {
         console.log(this.props.query);
-        const {id} = this.props.router.query;
+        const {id} = this.props.query;
         fetchOrderById(id).then(order=>{
             this.setState({order,loading:false})
             console.log(order);
@@ -91,11 +94,9 @@ class OrderPage extends React.PureComponent<Props,State> {
                             <p>No contact information</p>
                             <p>No phone number</p>
                         </Card.Section>
-                        {/* <Card.Section title="shipping address" actions={[{content:"Edit"}]}>
-                            <p>No shipping address</p>
-                        </Card.Section> */}
+                       
                         <ShippingAddressSection
-                            name={shipping_address.name||'No name'}
+                            name={shipping_address.name||''}
                             address1={shipping_address.address1||''}
                             address2={shipping_address.address2||''}
                             zip={shipping_address.zip||''}
@@ -157,4 +158,4 @@ class OrderPage extends React.PureComponent<Props,State> {
         );
     }
 }
-export default withRouter(OrderPage);
+export default OrderPage;

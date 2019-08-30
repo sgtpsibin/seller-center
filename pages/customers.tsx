@@ -4,7 +4,8 @@ import {Page} from '@shopify/polaris';
 import AppLayout from '../components/library/layout';
 
 class CustomerPage extends React.Component {
-  
+
+    
   render() {
     
     return(

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, TextContainer,Card} from '@shopify/polaris';
+import {Modal, TextContainer,Card} from '@shopify/polaris';
 
 type Props = {
   name?:string,

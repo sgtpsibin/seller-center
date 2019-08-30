@@ -37,23 +37,22 @@ const CustomLinkComponent = ({children, url, ...rest}) => {
   );
 };
 
-class MyApp extends App {
-  static async getInitialProps ({ Component, ctx }) {
+class MyApp extends App<any> {
+  static async getInitialProps ({ Component, ctx, router:{query} }) {
     let pageProps = {}
-
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({ ctx })
     }
 
-    return { pageProps }
+    return { pageProps,query }
   }
 
   render () {
-    const { Component, pageProps, store } = this.props
+    const { Component, pageProps, store, query } = this.props
     return (
       <Provider store={store}>
         <AppProvider theme={theme} linkComponent={CustomLinkComponent}>
-          <Component {...pageProps} />
+          <Component {...pageProps} query={query} />
         </AppProvider>
       </Provider>
     )

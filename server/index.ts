@@ -1,15 +1,15 @@
 
 import express from 'express';
 import next from 'next';
-const routes = require('./routes');
+import {routes} from './routes';
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 // const handle = app.getRequestHandler();
-// const handler = routes.getRequestHandler(app);
-const handler = routes.getRequestHandler(app, ({req, res, route, query}) => {
-  app.render(req, res, route.page, query)
-})
+const handler = routes.getRequestHandler(app);
+// const handler = routes.getRequestHandler(app, ({req, res, route, query}) => {
+//   app.render(req, res, route.page, query)
+// })
 
 const devProxy = {
   '/api': {
