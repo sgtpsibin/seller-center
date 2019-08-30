@@ -10,7 +10,7 @@ import {HomeMajorMonotone,
 
 import {withRouter, NextRouter } from 'next/router';
 import {connect} from 'react-redux';
-import Router from 'next/router';
+// import Router from 'next/router';
 
 type Props = {
   router: NextRouter,
@@ -38,9 +38,12 @@ class NavigationBar extends React.PureComponent<Props> {
     //   return;      
     // }
     
-    isSelected = (url:string):boolean => {
-      const { pathname } = this.props.router;
-      if (pathname===url) {
+    isSelected = (url:string,altUrl?:string):boolean => {
+      const { asPath } = this.props.router;
+      // if(altUrl) {
+      //   if(asPath===altUrl)
+      // }
+      if (asPath===url) {
         return true;
       }
       return false;
@@ -65,7 +68,7 @@ class NavigationBar extends React.PureComponent<Props> {
                 badge: '20',
                 subNavigationItems: [
                   {
-                    url: '/orders/',
+                    url: '/orders',
                     label: 'Tất cả đơn hàng',
                     matches: this.isSelected('/orders')
                                      

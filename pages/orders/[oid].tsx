@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'next/router';
 
+import ShippingAddressSection from '../../components/app/OrderPage/shippingInformation';
+
 import {
     Page,
     Card,
@@ -18,6 +20,8 @@ import AppLayout from '../../components/library/layout';
 
 type Props = {
     router: any,
+    query:any,
+    url:any
 }
 type State = {
     order:any,
@@ -32,14 +36,24 @@ class OrderPage extends React.PureComponent<Props,State> {
             name:null,
             created_at:null,
             financial_status:null,
-            fulfillment_status:null
+            fulfillment_status:null,
+            shipping_address:{
+                address1:null,
+                address2:null,
+                name:null,
+                first_name:null,
+                last_name:null,
+                zip:null
+            }
         },
         loading:true
         
     }
+    
     componentDidMount() {
-        const {oid} = this.props.router.query;
-        fetchOrderById(oid).then(order=>{
+        console.log(this.props.query);
+        const {id} = this.props.router.query;
+        fetchOrderById(id).then(order=>{
             this.setState({order,loading:false})
             console.log(order);
         });
@@ -47,7 +61,7 @@ class OrderPage extends React.PureComponent<Props,State> {
     }
 
     render() {
-        const {id,name,created_at,financial_status,fulfillment_status} = this.state.order;
+        const {id,name,created_at,financial_status,fulfillment_status,shipping_address} = this.state.order;
         const { loading } = this.state;
         const pageMarkup = (
             <Page 
@@ -77,9 +91,17 @@ class OrderPage extends React.PureComponent<Props,State> {
                             <p>No contact information</p>
                             <p>No phone number</p>
                         </Card.Section>
-                        <Card.Section title="shipping address" actions={[{content:"Edit"}]}>
+                        {/* <Card.Section title="shipping address" actions={[{content:"Edit"}]}>
                             <p>No shipping address</p>
-                        </Card.Section>
+                        </Card.Section> */}
+                        <ShippingAddressSection
+                            name={shipping_address.name||'No name'}
+                            address1={shipping_address.address1||''}
+                            address2={shipping_address.address2||''}
+                            zip={shipping_address.zip||''}
+                            fullname={shipping_address.first_name+' '+shipping_address.last_name}
+                        />
+
                         <Card.Section title="billing address" actions={[{content:"Edit"}]}>
                             <p>No billing address</p>
                         </Card.Section>
@@ -129,7 +151,7 @@ class OrderPage extends React.PureComponent<Props,State> {
         
         const renderPage = loading ? loadingMarkup : pageMarkup;
         return(
-            <AppLayout title="Order Detail">
+            <AppLayout title={`${name||'__'} - Order Detail`}>
                 {renderPage}
             </AppLayout>
         );

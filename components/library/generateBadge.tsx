@@ -6,7 +6,7 @@ export function paymentStatusBadge(status:string) {
             return <Badge progress="complete">Paid</Badge>
         case 'pending':
             return <Badge status="warning" progress="incomplete">Pending</Badge>
-        case 'partially_paid':
+        case "partially_paid":
             return <Badge status="attention" progress="partiallyComplete">Partially Paid</Badge>       
             
         default:
