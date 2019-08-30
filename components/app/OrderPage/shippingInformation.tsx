@@ -1,13 +1,18 @@
 import React from 'react';
 import {Modal, TextContainer,Card} from '@shopify/polaris';
+import EditShipInfoForm from './Forms/EditShipInfo';
 
 type Props = {
   name?:string,
-  fullname?:string,
   address1?:string,
+  first_name:string,
+  last_name:string,
   address2?:string,
   zip?:string,
-  phone?:string
+  phone?:string,
+  province?:string,
+  city?:string,
+  company?:string
 }
 
 class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
@@ -18,8 +23,7 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
 
   render() {
     const {active} = this.state;
-    const { name,address1,address2,fullname } = this.props;
-    console.log(active);
+    const { name,address1,address2,first_name,last_name,zip,province,city,phone,company} = this.props;
     const modal = (
         <div>
         {/* <Button onClick={this.handleChange}>Open</Button> */}
@@ -39,13 +43,18 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
           ]}
         >
           <Modal.Section>
-            <TextContainer>
-              <p>
-                Use Instagram posts to share your products with millions of
-                people. Let shoppers buy from your store without leaving
-                Instagram.
-              </p>
-            </TextContainer>
+            <EditShipInfoForm
+              address1={address1}
+              city={city}
+              province={province}
+              zip={zip}
+              first_name={first_name}
+              last_name={last_name} 
+              phone={phone}  
+              company={company}
+              // onSubmit={(shipInfo)=>this.submitChange(shipInfo)}
+                     
+            />
           </Modal.Section>
         </Modal>
       </div>
@@ -53,9 +62,10 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
     const shipInfo = (
       <div className="text-muted">
         <p className="my-0">{name}</p>
-        <p className="my-0">{fullname}</p>
+        <p className="my-0">{first_name+' '+last_name}</p>
+        <p className="my-0">{city+' '+province+' '+zip}</p>
         <p className="my-0">{address1}</p>
-        <p className="my-0">{address2}</p>
+        <p className="my-0">{phone}</p>
       </div>
     )
 
@@ -71,6 +81,8 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
   handleChange = () => {
     this.setState(({active}) => ({active: !active}));
   };
+
+  
   
 }
 

@@ -43,7 +43,6 @@ class MyApp extends App<any> {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({ ctx })
     }
-
     return { pageProps,query }
   }
 

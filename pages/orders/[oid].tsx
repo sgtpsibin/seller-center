@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'next/router';
 
 import ShippingAddressSection from '../../components/app/OrderPage/shippingInformation';
 
@@ -41,12 +40,16 @@ class OrderPage extends React.PureComponent<Props,State> {
             financial_status:null,
             fulfillment_status:null,
             shipping_address:{
-                address1:null,
+                address1:'',
                 address2:null,
                 name:null,
                 first_name:null,
                 last_name:null,
-                zip:null
+                zip:'',
+                province:'',
+                city:'',
+                phone:'',
+                company:''
             }
         },
         loading:true
@@ -54,13 +57,11 @@ class OrderPage extends React.PureComponent<Props,State> {
     }
     
     componentDidMount() {
-        console.log(this.props.query);
         const {id} = this.props.query;
         fetchOrderById(id).then(order=>{
-            this.setState({order,loading:false})
+            this.setState({order,loading:false});
             console.log(order);
-        });
-        
+        });        
     }
 
     render() {
@@ -100,19 +101,25 @@ class OrderPage extends React.PureComponent<Props,State> {
                             address1={shipping_address.address1||''}
                             address2={shipping_address.address2||''}
                             zip={shipping_address.zip||''}
-                            fullname={shipping_address.first_name+' '+shipping_address.last_name}
+                            first_name={shipping_address.first_name}
+                            last_name={shipping_address.last_name}
+                            province={shipping_address.province||''}
+                            city={shipping_address.city||''}
+                            phone={shipping_address.phone}
+                            company={shipping_address.company}
                         />
+                        
 
                         <Card.Section title="billing address" actions={[{content:"Edit"}]}>
                             <p>No billing address</p>
-                        </Card.Section>
-                        
+                        </Card.Section>                        
                     </Card>
                 </Layout.Section>
                 </Layout>
             </Page>
 
         );
+        // console.log(this.state.shipping_address.city);
         const loadingMarkup = (
                 <SkeletonPage primaryAction secondaryActions={2}>
                     <Layout>

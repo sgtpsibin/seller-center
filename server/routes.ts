@@ -13,5 +13,3 @@ routes
 .add('order', '/orders/:id','/orders/[oid]')
 .add('newOrder','/draft_orders/:oid','/orders/newOrder')
 // export default routes
-
-// export default routes;
