@@ -13,6 +13,24 @@ export default class OrderFilters extends React.Component {
     query: null
   };
 
+  componentDidMount() {
+    if(!window.location.search) {
+      return
+    } else {
+      const currentQuery = this.getCurrentQuery();
+      // console.log(currentQuery["status"]);
+      Object.keys(currentQuery).map(key=>{
+        if(key!=='query') {
+          currentQuery[key]=currentQuery[key].split(',');
+        }
+      })
+      const newQuery = Object.assign(this.state,currentQuery);
+      this.setState(newQuery);
+    }  
+    
+  }
+
+
   render() {
     const { status, fulfillment_status, financial_status, query } = this.state;
     const filters = [{
@@ -58,16 +76,14 @@ export default class OrderFilters extends React.Component {
                 <div className="mr-2">
                   <Button icon={SortMinor}></Button>
                 </div>
-              </div>
-              
-            </Filters>
-            
+              </div>              
+            </Filters>            
             </>);
   }
 
   getCurrentQuery = () => {
     let search = location.search.substring(1);
-    return JSON.parse('{"' + decodeURI(search)
+    return JSON.parse('{"' + decodeURIComponent(decodeURI(search))
                 .replace(/"/g, '\\"')
                 .replace(/&/g, '","')
                 .replace(/=/g,'":"') + '"}');
@@ -85,11 +101,8 @@ export default class OrderFilters extends React.Component {
         }
       });
 
-    let currenQuery = this.getCurrentQuery();
-    let officialQuery = Object.assign(currenQuery,queryObject);
-
-    const queryString = Object.keys(officialQuery).map(key => key + '=' + officialQuery[key]).join('&');
-    console.log(queryString);
+    const queryString = Object.keys(queryObject).map(key => key + '=' + queryObject[key]).join('&');
+    // console.log(queryString);
     
   }
 
