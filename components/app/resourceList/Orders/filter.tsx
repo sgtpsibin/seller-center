@@ -65,28 +65,43 @@ export default class OrderFilters extends React.Component {
             </>);
   }
 
+  getCurrentQuery = () => {
+    let search = location.search.substring(1);
+    return JSON.parse('{"' + decodeURI(search)
+                .replace(/"/g, '\\"')
+                .replace(/&/g, '","')
+                .replace(/=/g,'":"') + '"}');
+  }
+
   filterToQuery = () => {
     let queryObject = {};
-    Object.keys(this.state).filter(key => !isEmpty(this.state[key])).map(key=>{
-      if(typeof(this.state[key])==='string') {
-        queryObject[key] = this.state[key];
-      }else {        
-        queryObject[key]=this.state[key].map(option=>`${option}`).join(',')
-      }
-    });
-    const queryString = Object.keys(queryObject).map(key => key + '=' + queryObject[key]).join('&');
+    Object.keys(this.state)
+      .filter(key => !isEmpty(this.state[key]))
+      .map(key=>{
+        if(typeof(this.state[key])==='string') {
+          queryObject[key] = this.state[key];
+        }else {        
+          queryObject[key]=this.state[key].map(option=>`${option}`).join(',');
+        }
+      });
+
+    let currenQuery = this.getCurrentQuery();
+    let officialQuery = Object.assign(currenQuery,queryObject);
+
+    const queryString = Object.keys(officialQuery).map(key => key + '=' + officialQuery[key]).join('&');
     console.log(queryString);
+    
   }
 
   handleChange = key => value => {
     this.setState({ [key]: value },()=>{
-      this.filterToQuery();
-      console.log(this.state)});
+      this.filterToQuery();});
     
   };
 
   handleRemove = key => {
     this.setState({ [key]: null });
+
   };
 
   handleQueryClear = () => {
