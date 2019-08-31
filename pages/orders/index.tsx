@@ -1,24 +1,28 @@
 import React from 'react';
 import { Page, Tabs, Card } from '@shopify/polaris';
 import { connect } from 'react-redux';
-import {withRouter} from 'next/router';
 
 import AppLayout from '../../components/library/layout';
 import OrderResourceList from '../../components/app/resourceList/Orders';
 
 
-type Props = {
-  user:any,
-  fetchOrders:any,
-  fetchOrdersWithQuery:any,
-  orders?:any,
-  router:any
-};
+// type Props = {
+//   user:any,
+//   fetchOrders:any,
+//   fetchOrdersWithQuery:any,
+//   orders?:any,
+//   // router:any
+//   query:any
+// };
 
-class Orders extends React.Component<Props> {
+class Orders extends React.Component<any> {
+
+  static getInitialProps({query}) {
+    return {query};
+  }
 
   componentDidMount() {
-    const { query } = this.props.router;
+    const { query } = this.props;
     if(this.props.orders.length===0&&Object.entries(query).length===0)  {
       this.props.fetchOrders();
     }
@@ -40,11 +44,7 @@ class Orders extends React.Component<Props> {
   };
   
   render() {
-
-
-
-    const {tabSelected} = this.state;
-    
+    const {tabSelected} = this.state;    
     const tabs = [
       {
         id: 'all-orders',
@@ -99,4 +99,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Orders));
+export default connect(mapStateToProps,mapDispatchToProps)(Orders);

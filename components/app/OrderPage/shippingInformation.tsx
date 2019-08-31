@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, TextContainer,Card} from '@shopify/polaris';
+import {Modal,Card} from '@shopify/polaris';
 import EditShipInfoForm from './Forms/EditShipInfo';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   phone?:string,
   province?:string,
   city?:string,
-  company?:string
+  company?:string,
 }
 
 class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
@@ -81,9 +81,6 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
   handleChange = () => {
     this.setState(({active}) => ({active: !active}));
   };
-
-  
   
 }
-
 export default ShippingAddressSection;

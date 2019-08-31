@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ShippingAddressSection from '../../components/app/OrderPage/shippingInformation';
+import {connect} from 'react-redux';
 
 import {
     Page,
@@ -16,10 +17,12 @@ import { fetchOrderById } from '../../utils/api/orders';
 import { TitleMetadata } from '../../components/app/OrderPage/titleMetadata';
 
 import AppLayout from '../../components/library/layout';
+import { addOrder } from '../../redux/actions/orders.action';
 
 type Props = {
     query:any,
-    url:any
+    url:any,
+    addOrder:any
 }
 type State = {
     order:any,
@@ -59,12 +62,14 @@ class OrderPage extends React.PureComponent<Props,State> {
     componentDidMount() {
         const {id} = this.props.query;
         fetchOrderById(id).then(order=>{
+            this.props.addOrder(order)
             this.setState({order,loading:false});
             console.log(order);
         });        
     }
 
     render() {
+        
         const {id,name,created_at,financial_status,fulfillment_status,shipping_address} = this.state.order;
         const { loading } = this.state;
         const pageMarkup = (
@@ -165,4 +170,9 @@ class OrderPage extends React.PureComponent<Props,State> {
         );
     }
 }
-export default OrderPage;
+const mapDispatchToProps = (dispatch) => {
+    return{
+        addOrder: (orderObject) => {dispatch(addOrder(orderObject))}
+    }
+}
+export default connect(null,mapDispatchToProps)(OrderPage);

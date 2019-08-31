@@ -7,32 +7,32 @@ import {
 
 export default class OrderFilters extends React.Component {
   state = {
-    orderStatus: null,
-    fulfillmentStatus: null,
-    paymentStatus: null,
-    queryValue: null
+    status: null,
+    fulfillment_status: null,
+    financial_status: null,
+    query: null
   };
 
   render() {
-    const { orderStatus, fulfillmentStatus, paymentStatus, queryValue } = this.state;
+    const { status, fulfillment_status, financial_status, query } = this.state;
     const filters = [{
-      key: 'orderStatus',
+      key: 'status',
       label: 'Status',
-      filter: <div className="Polaris-Filters__orderStatus"><ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'open' }, { label: 'Archived', value: 'closed'}, { label: 'Canceled', value: 'cancelled' }]} selected={orderStatus || []} onChange={this.handleChange('orderStatus')} /></div>,
+      filter: <div className="Polaris-Filters__status"><ChoiceList title={'Orders status'} titleHidden choices={[{ label: 'Open', value: 'open' }, { label: 'Archived', value: 'closed'}, { label: 'Canceled', value: 'cancelled' }]} selected={status || []} onChange={this.handleChange('status')} /></div>,
       shortcut: true
     }, {
-      key: 'paymentStatus',
+      key: 'financial_status',
       label: 'Payment Status',
-      filter: <ChoiceList title={'Payment Status'} titleHidden choices={[{ label: 'Authorized', value: 'authorized' }, { label: 'Paid', value: 'paid'}, { label: 'Partially refunded', value: 'partially_refunded' },{ label: 'Partially paid', value: 'partially_paid'},{ label: 'Pending', value: 'pending'},{ label: 'Refunded', value: 'refunded'}, { label:'Unpaid',value:'unpaid' },{ label:'Voided', value:'voided'}]} selected={paymentStatus || []} onChange={this.handleChange('paymentStatus')} allowMultiple/>,
+      filter: <ChoiceList title={'Payment Status'} titleHidden choices={[{ label: 'Authorized', value: 'authorized' }, { label: 'Paid', value: 'paid'}, { label: 'Partially refunded', value: 'partially_refunded' },{ label: 'Partially paid', value: 'partially_paid'},{ label: 'Pending', value: 'pending'},{ label: 'Refunded', value: 'refunded'}, { label:'Unpaid',value:'unpaid' },{ label:'Voided', value:'voided'}]} selected={financial_status || []} onChange={this.handleChange('financial_status')} allowMultiple/>,
       shortcut: true
     },{
-      key:'fulfillmentStatus',
+      key:'fulfillment_status',
       label: 'Fulfillment Status',
-      filter: <ChoiceList title={'Fulfillment Status'} titleHidden choices={[{ label:'Fulfilled', value:'shipped'},{ label:'Unfulfilled', value:'unshipped'},{ label:'Partially fulfilled',value:'partial'}]} selected={fulfillmentStatus||[]} onChange={this.handleChange('fulfillmentStatus')} allowMultiple/>,
+      filter: <ChoiceList title={'Fulfillment Status'} titleHidden choices={[{ label:'Fulfilled', value:'shipped'},{ label:'Unfulfilled', value:'unshipped'},{ label:'Partially fulfilled',value:'partial'}]} selected={fulfillment_status||[]} onChange={this.handleChange('fulfillment_status')} allowMultiple/>,
       shortcut: true
     }];
 
-    const appliedFilters = Object.keys(this.state).filter(key => !isEmpty(this.state[key]) && key !== 'queryValue').map(key => {
+    const appliedFilters = Object.keys(this.state).filter(key => !isEmpty(this.state[key]) && key !== 'query').map(key => {
       return {
         key,
         label: disambiguateLabel(key, this.state[key]),
@@ -43,11 +43,11 @@ export default class OrderFilters extends React.Component {
     return (
       <>
           <Filters 
-            queryValue={queryValue} 
+            queryValue={query} 
             filters={filters} 
             appliedFilters={appliedFilters} 
             queryPlaceholder='Lọc đơn hàng'
-            onQueryChange={this.handleChange('queryValue')} 
+            onQueryChange={this.handleChange('query')} 
             onQueryClear={this.handleQueryClear} 
             onClearAll={this.handleClearAll} 
             focused={true}>
@@ -65,9 +65,24 @@ export default class OrderFilters extends React.Component {
             </>);
   }
 
+  filterToQuery = () => {
+    let queryObject = {};
+    Object.keys(this.state).filter(key => !isEmpty(this.state[key])).map(key=>{
+      if(typeof(this.state[key])==='string') {
+        queryObject[key] = this.state[key];
+      }else {        
+        queryObject[key]=this.state[key].map(option=>`${option}`).join(',')
+      }
+    });
+    const queryString = Object.keys(queryObject).map(key => key + '=' + queryObject[key]).join('&');
+    console.log(queryString);
+  }
+
   handleChange = key => value => {
-    this.setState({ [key]: value });
-    console.log(value);
+    this.setState({ [key]: value },()=>{
+      this.filterToQuery();
+      console.log(this.state)});
+    
   };
 
   handleRemove = key => {
@@ -75,15 +90,15 @@ export default class OrderFilters extends React.Component {
   };
 
   handleQueryClear = () => {
-    this.setState({ queryValue: null });
+    this.setState({ query: null });
   };
 
   handleClearAll = () => {
     this.setState({
-      orderStatus: null,
-      paymentStatus: null,
-      fulfillmentStatus: null,
-      queryValue: null
+      status: null,
+      financial_status: null,
+      fulfillment_status: null,
+      query: null
     });
   };
 }
@@ -92,11 +107,11 @@ function disambiguateLabel(key, value) {
   switch (key) {
     // case 'moneySpent':
     //   return `Money spent is between $${value[0]} and $${value[1]}`;
-    case 'paymentStatus':
+    case 'financial_status':
       return value.map((val)=>`Payment ${val}`).join(', ');
-    case 'orderStatus':
+    case 'status':
       return `${value} orders`;
-    case 'fulfillmentStatus':
+    case 'fulfillment_status':
       return value.map((val)=>`${val}`).join(', ');
     default:
       return value;

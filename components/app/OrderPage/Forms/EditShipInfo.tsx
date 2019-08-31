@@ -9,7 +9,7 @@ type Props = {
     city?:string,
     address1?:string,
     zip?:string,
-    company:string
+    company?:string
 }
 
 class EditShipInfoForm extends React.PureComponent<Props>{
