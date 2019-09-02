@@ -7,7 +7,7 @@ export function* getUserData() {
         const respone = yield axios.get(
                                 process.env.AUTH_INFO_API,
                                 { headers: {"Authorization" : `Bearer ${localStorage.authToken}`} });
-        console.log('get requested');
+        // console.log(respone);
         const {shop,user} = respone.data.data;
         const userData = {
             shop,
@@ -15,7 +15,6 @@ export function* getUserData() {
         };
         yield put(receiveUserData(userData));
     } catch (e) {
-        console.log(e);
-
+        localStorage.removeItem('authToken');
     }
 }

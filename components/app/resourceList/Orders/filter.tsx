@@ -4,8 +4,13 @@ import {
   StarOutlineMinor,
   SortMinor
 } from '@shopify/polaris-icons';
+import { connect } from 'react-redux';
 
-export default class OrderFilters extends React.Component {
+import { debounce } from 'lodash';
+import { getCurrentQuery } from '../../../../utils/getCurrentQuery';
+import Router  from 'next/router';
+
+class OrderFilters extends React.PureComponent<any> {
   state = {
     status: null,
     fulfillment_status: null,
@@ -14,22 +19,31 @@ export default class OrderFilters extends React.Component {
   };
 
   componentDidMount() {
+     //POPSTATE CONFIG 
+    window.onpopstate=()=>{
+      const {pathname,search} = window.location;
+      if(pathname==="/orders") {
+        if(Router.pathname!==pathname) {
+          this.props.reqOrderWithQuery(search.substring(1));
+          Router.push(pathname+search,pathname+search);
+          return
+        }
+        this.props.reqOrderWithQuery(search.substring(1));
+        let getQuery = getCurrentQuery();
+        let popstateQuery = Object.assign(this.state,getQuery);
+        this.setState(popstateQuery);
+      }
+    };
+    //POPSTATE CONFIG 
     if(!window.location.search) {
       return
     } else {
-      const currentQuery = this.getCurrentQuery();
-      // console.log(currentQuery["status"]);
-      Object.keys(currentQuery).map(key=>{
-        if(key!=='query') {
-          currentQuery[key]=currentQuery[key].split(',');
-        }
-      })
+      const currentQuery = getCurrentQuery();
       const newQuery = Object.assign(this.state,currentQuery);
       this.setState(newQuery);
-    }  
-    
+    }    
   }
-
+  
 
   render() {
     const { status, fulfillment_status, financial_status, query } = this.state;
@@ -78,16 +92,10 @@ export default class OrderFilters extends React.Component {
                 </div>
               </div>              
             </Filters>            
-            </>);
+    </>);
   }
 
-  getCurrentQuery = () => {
-    let search = location.search.substring(1);
-    return JSON.parse('{"' + decodeURIComponent(decodeURI(search))
-                .replace(/"/g, '\\"')
-                .replace(/&/g, '","')
-                .replace(/=/g,'":"') + '"}');
-  }
+  
 
   filterToQuery = () => {
     let queryObject = {};
@@ -100,25 +108,26 @@ export default class OrderFilters extends React.Component {
           queryObject[key]=this.state[key].map(option=>`${option}`).join(',');
         }
       });
-
     const queryString = Object.keys(queryObject).map(key => key + '=' + queryObject[key]).join('&');
-    // console.log(queryString);
-    
+    return queryString;
   }
 
   handleChange = key => value => {
-    this.setState({ [key]: value },()=>{
-      this.filterToQuery();});
-    
+    this.setState({[key]: value },()=>this.reloadResourceList());
   };
 
-  handleRemove = key => {
-    this.setState({ [key]: null });
+  reloadResourceList = debounce(() => {    
+      const query= this.filterToQuery();
+      window.history.pushState(null,null,`/orders?${query}`);
+      this.props.reqOrderWithQuery(query);
+  },1000);
 
+  handleRemove = key => {
+    this.setState({ [key]: null },()=>this.reloadResourceList());
   };
 
   handleQueryClear = () => {
-    this.setState({ query: null });
+    this.setState({ query: null },()=>this.reloadResourceList());
   };
 
   handleClearAll = () => {
@@ -127,7 +136,7 @@ export default class OrderFilters extends React.Component {
       financial_status: null,
       fulfillment_status: null,
       query: null
-    });
+    },()=>this.reloadResourceList());
   };
 }
 
@@ -153,3 +162,11 @@ function isEmpty(value) {
     return value === '' || value == null;
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    reqOrderWithQuery: query => dispatch({type:'REQUEST_ORDERS_WITH_QUERY',query})
+  }
+}
+
+export default connect(null,mapDispatchToProps)(OrderFilters);

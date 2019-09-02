@@ -60,8 +60,7 @@
             background-image: linear-gradient(#ff6a00,#ee0979);
             color: white;
             padding: .3rem 1.5rem;
-            font-size: 16px;
-            
+            font-size: 16px;            
         }
 
         @media (max-width: 576px) { 
@@ -71,3 +70,15 @@
 }
 
 //Resource List
+
+
+//TOP BAR 
+.Polaris-TopBar {
+    background-color: #f58220 !important;
+}
+.Polaris-UserMenu-UserMenu__Name {
+    margin-bottom: 0 !important;    
+}
+.Polaris-TopBar-SearchField__Backdrop {
+    background-color: lighten($color: #f58220, $amount: 10%)
+}

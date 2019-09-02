@@ -23,6 +23,7 @@ type LayoutProps = {
 class AppLayout extends React.PureComponent<LayoutProps> {
  
   componentDidMount() {
+    this.routerConfig()
     if (!localStorage.authToken) {
       Router.push('/login');
     } else {
@@ -30,6 +31,7 @@ class AppLayout extends React.PureComponent<LayoutProps> {
         this.props.getUserData();
       }
     }
+    
   }
   routerConfig = () => {
     Router.events.on('routeChangeStart',()=>{
@@ -46,7 +48,6 @@ class AppLayout extends React.PureComponent<LayoutProps> {
 
   
   render() {
-    {this.routerConfig()}
     const topBarMarkup = (
       <TopBarMenu/>
     );
@@ -78,8 +79,7 @@ class AppLayout extends React.PureComponent<LayoutProps> {
 
     const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
     // const pageMarkup = actualPageMarkup; 
-    
-    
+    console.log('reload');
     return (
       <div style={{height: '500px'}}>  
           <Head>

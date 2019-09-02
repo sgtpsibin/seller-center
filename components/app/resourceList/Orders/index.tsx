@@ -14,7 +14,7 @@ type Props = {
   router:any
 }
 
-class OrderResourceList extends React.Component<Props> {
+class OrderResourceList extends React.PureComponent<Props> {
   state = {
     selectedItems: []
   };
@@ -23,11 +23,11 @@ class OrderResourceList extends React.Component<Props> {
     this.setState({selectedItems});
   };
   
-  renderItem = (item) => <OrderItem {...item}/>;
+  renderItem = (item) => <OrderItem {...item}/>;  
 
   render() {
     const {orders,totalOrder} = this.props
-    const page = this.props.router.query||1;
+    const {page} = this.props.router.query||1;
     
     const resourceName = {
       singular: 'order',

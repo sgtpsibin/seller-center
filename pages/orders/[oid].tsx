@@ -60,7 +60,8 @@ class OrderPage extends React.PureComponent<Props,State> {
     }
     
     componentDidMount() {
-        const {id} = this.props.query;
+        const altId = window.location.pathname.match(/\d+/g).map(Number).toString();
+        const id = this.props.query.id || altId;
         fetchOrderById(id).then(order=>{
             this.props.addOrder(order)
             this.setState({order,loading:false});
@@ -112,8 +113,7 @@ class OrderPage extends React.PureComponent<Props,State> {
                             city={shipping_address.city||''}
                             phone={shipping_address.phone}
                             company={shipping_address.company}
-                        />
-                        
+                        />                       
 
                         <Card.Section title="billing address" actions={[{content:"Edit"}]}>
                             <p>No billing address</p>

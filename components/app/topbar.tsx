@@ -48,8 +48,8 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
           },
         ]}
         name={shop.name}
-        detail="TTS SELLER"
-        initials="QA"
+        // detail="TTS SELLER"
+        initials="DE"
         open={userMenuOpen}
         onToggle={toggleUserMenu}
       />

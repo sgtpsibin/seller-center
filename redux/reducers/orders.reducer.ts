@@ -4,19 +4,18 @@ const initialState = {
     orders: [],
     loading:true,
     totalOrder: 0,
-    order:{}
-    // shipping_address:{}
+    order:{},
 };
 
 const ordersReducer = (state=initialState,action) => {
     switch (action.type) {
         
-        case RECEIVE_ORDERS:        
-          
+        case RECEIVE_ORDERS:                
             return {...state,
                     orders:action.payload.orders,
                     totalOrder:action.payload.totalOrder,
-                    loading:false
+                    loading:false,
+                    newFilter:false
             }
         case RECEIVE_ORDER:
             return {...state,
@@ -24,7 +23,7 @@ const ordersReducer = (state=initialState,action) => {
             }
       
         case LOADING_ORDERS:
-            return {...state,loading:true}
+            return {...state,loading:true}      
     
         default:
             return state;

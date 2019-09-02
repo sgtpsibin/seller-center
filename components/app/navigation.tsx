@@ -39,11 +39,12 @@ class NavigationBar extends React.PureComponent<Props> {
     // }
     
     isSelected = (url:string,altUrl?:string):boolean => {
-      const { asPath } = this.props.router;
+      const { pathname } = this.props.router;
+
       // if(altUrl) {
       //   if(asPath===altUrl)
       // }
-      if (asPath===url) {
+      if (pathname.split('/')[1]===url) {
         return true;
       }
       return false;
@@ -56,13 +57,13 @@ class NavigationBar extends React.PureComponent<Props> {
             items={[
               {
                 url: '/',
-                selected:this.isSelected('/'),
+                selected:this.isSelected(''),
                 label: 'Trang Chủ',
                 icon: HomeMajorMonotone,
               },
               {
                 url:'/orders',               
-                selected:this.isSelected('/orders'),
+                selected:this.isSelected('orders'),
                 label: 'Đơn Hàng',
                 icon: OrdersMajorTwotone,
                 badge: '20',
@@ -70,19 +71,19 @@ class NavigationBar extends React.PureComponent<Props> {
                   {
                     url: '/orders',
                     label: 'Tất cả đơn hàng',
-                    matches: this.isSelected('/orders')
+                    matches: this.isSelected('orders')
                                      
                   },
                   {
                     url:'/draft_orders',
                     label: 'Drafts',
-                    matches:this.isSelected('/draft_orders')
+                    matches:this.isSelected('draft_orders')
                   }
                 ]               
               },
               {
                 url: '/products',
-                selected: this.isSelected('/products'),
+                selected: this.isSelected('products'),
                 label: 'Sản phẩm',
                 icon: ProductsMajorMonotone,
               },
@@ -90,13 +91,13 @@ class NavigationBar extends React.PureComponent<Props> {
                 url: '/customers',
                 label: 'Khách hàng',
                 icon: CustomersMajorMonotone,
-                selected: this.isSelected('/customers'),
+                selected: this.isSelected('customers'),
               },
               {
                 url: '/dashboard',
                 label: 'Thống kê',
                 icon: AnalyticsMajorMonotone,
-                selected: this.isSelected('/dashboard'),
+                selected: this.isSelected('dashboard'),
               }
             ]}
             action={{

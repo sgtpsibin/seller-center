@@ -20,6 +20,7 @@ export function* fetchOrdersWithQuery(action) {
     const {query} = action;
     try {
         yield put({type:'LOADING_ORDERS'});
+        console.log(query);
         const respone = yield axios.get(
                                 process.env.API_ROOT_URL+'/orders.json?'+query,
                                 { headers: {"Authorization" : `Bearer ${process.env.DEV_TOKEN}`}});

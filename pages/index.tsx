@@ -25,12 +25,12 @@ class Index extends React.Component<{hasAuth:boolean,orders:any,fetchOrders:any}
               <Card title='' sectioned subdued>
                 <div className="order-notifications">
                   <Icon source={OrdersMajorMonotone} color="orange"/>
-                  <p><b>{this.props.orders.length||'__'} orders</b> to fulfill</p>
+                  <p><b>{this.props.orders.length||'0'} orders</b> to fulfill</p>
                 </div>
                 <hr/>
                 <div className="order-notifications">
                   <Icon source={PaymentsMajorMonotone} color="orange"/>
-                  <p><b>{this.props.orders.length||'__'} payments</b> to capture</p>
+                  <p><b>{this.props.orders.length||'0'} payments</b> to capture</p>
                 </div>
               </Card>
             </a>
