@@ -1,65 +1,63 @@
-import React from 'react';
-import {Card, ResourceList,Pagination} from '@shopify/polaris';
+import React from "react";
+import { Card, ResourceList, Pagination } from "@shopify/polaris";
 
-import OrderItem from './orderItem';
-import OrderFilter from './filter';
+import OrderItem from "./orderItem";
+import OrderFilter from "./filter";
 
-import { connect } from 'react-redux';
-import { withRouter } from 'next/router';
+import { connect } from "react-redux";
+import { withRouter } from "next/router";
 
 class OrderResourceList extends React.PureComponent<any> {
   state = {
     selectedItems: []
   };
-  
-  handleSelectionChange = (selectedItems) => {
-    this.setState({selectedItems});
+
+  handleSelectionChange = selectedItems => {
+    this.setState({ selectedItems });
   };
-  
-  renderItem = (item) => <OrderItem {...item}/>;  
+
+  renderItem = item => <OrderItem {...item} />;
 
   render() {
-    const {orders,totalOrder} = this.props
-    const {page} = this.props.router.query||1;
-    
+    const { orders, totalOrder } = this.props;
+    const { page } = this.props.router.query || 1;
+
     const resourceName = {
-      singular: 'order',
-      plural: 'orders',
+      singular: "order",
+      plural: "orders"
     };
-    const items = orders||[];
-    
+    const items = orders || [];
+
     const bulkActions = [
       {
-        content: 'Fulfill Orders',
-        onAction: () => console.log('Todo: implement bulk add tags'),
+        content: "Fulfill Orders",
+        onAction: () => console.log("Todo: implement bulk add tags")
       },
       {
-        content: 'Capture payments',
-        onAction: () => console.log('Todo: implement bulk remove tags'),
+        content: "Capture payments",
+        onAction: () => console.log("Todo: implement bulk remove tags")
       }
     ];
-    const filterControl = (      
-      <OrderFilter/>
-    );
+    const filterControl = <OrderFilter />;
 
     ///////PAGINATION
-    const pages = Math.ceil(totalOrder/50)||1;
+    const pages = Math.ceil(totalOrder / 50) || 1;
     const paginate = (
       <div className="d-block text-center mx-auto my-5">
         <Pagination
-          hasPrevious={page-1>0}
+          hasPrevious={page - 1 > 0}
           onPrevious={() => {
-            console.log('Previous');
+            console.log("Previous");
           }}
-          hasNext={page<pages}
+          hasNext={page < pages}
           onNext={() => {
-            console.log('Next');
+            console.log("Next");
           }}
         />
       </div>
     );
-    const paginateControl = orders.length!==0 ? paginate : null;
-    
+    const paginateControl = orders.length !== 0 ? paginate : null;
+
     ///////////////
 
     return (
@@ -77,15 +75,14 @@ class OrderResourceList extends React.PureComponent<any> {
         />
         {paginateControl}
       </Card>
-      
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     orders: state.orders.orders,
-    loading:state.orders.loading,
+    loading: state.orders.loading,
     totalOrder: Number.parseInt(state.orders.totalOrder)
-  }
-}
+  };
+};
 export default connect(mapStateToProps)(withRouter(OrderResourceList));

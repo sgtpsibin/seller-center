@@ -1,84 +1,83 @@
-//Index Page 
+//Index Page
 
-.app-index .order-notifications {    
-        display:flex;
-        justify-content: flex-start;
-        align-items: center;
+.app-index .order-notifications {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
-    & .Polaris-Icon {
-        margin: unset !important;
-    }
+  & .Polaris-Icon {
+    margin: unset !important;
+  }
 
-    & p {
-        font-size: 18px;
-        margin-left: 1.5rem;
-        margin-top: .62rem;
-    }
+  & p {
+    font-size: 18px;
+    margin-left: 1.5rem;
+    margin-top: 0.62rem;
+  }
 }
 
 .app-index .Polaris-Card__Section {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 //Login Page
 
 .login-page {
-    min-height: 100vh;
-    background-image: linear-gradient(#ff6a00,#ee0979);
-    & .login-form {
-        padding: 3rem;
-        width: 40%;
-        position: absolute;
-        top:20vh;
-        right: 0;
-        left: 0;
-        margin-left: auto;
-        margin-right: auto;
+  min-height: 100vh;
+  background-image: linear-gradient(#ff6a00, #ee0979);
+  & .login-form {
+    padding: 3rem;
+    width: 40%;
+    position: absolute;
+    top: 20vh;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
 
-        & form {
-            width: 90%;
-        }
-
-        & img {
-            width: 10rem;
-            position: absolute;
-            top:-5rem;
-            right: 0;
-            left: 0;
-            margin-left: auto;
-            margin-right: auto;
-            border: 5px solid #fff;
-            box-shadow: 0px -7px 25px -7px rgba(128,124,128,1);
-        }
-
-        & input {
-            height: 3rem;
-            font-size: 14px;
-        }
-
-        & form button {
-            background-image: linear-gradient(#ff6a00,#ee0979);
-            color: white;
-            padding: .3rem 1.5rem;
-            font-size: 16px;            
-        }
-
-        @media (max-width: 576px) { 
-            width: 100%;
-         }
+    & form {
+      width: 90%;
     }
+
+    & img {
+      width: 10rem;
+      position: absolute;
+      top: -5rem;
+      right: 0;
+      left: 0;
+      margin-left: auto;
+      margin-right: auto;
+      border: 5px solid #fff;
+      box-shadow: 0px -7px 25px -7px rgba(128, 124, 128, 1);
+    }
+
+    & input {
+      height: 3rem;
+      font-size: 14px;
+    }
+
+    & form button {
+      background-image: linear-gradient(#ff6a00, #ee0979);
+      color: white;
+      padding: 0.3rem 1.5rem;
+      font-size: 16px;
+    }
+
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
 }
 
 //Resource List
 
-
-//TOP BAR 
+//TOP BAR
 .Polaris-TopBar {
-    background-color: #f58220 !important;
+  background-color: #f58220 !important;
 }
 .Polaris-UserMenu-UserMenu__Name {
-    margin-bottom: 0 !important;    
+  margin-bottom: 0 !important;
 }
 .Polaris-TopBar-SearchField__Backdrop {
-    background-color: lighten($color: #f58220, $amount: 10%)
+  background-color: lighten($color: #f58220, $amount: 10%);
 }

@@ -1,66 +1,69 @@
-import React from 'react';
-import {Card, Frame, Layout, Loading, SkeletonBodyText, SkeletonDisplayText, SkeletonPage, TextContainer} from '@shopify/polaris';
-import {connect} from 'react-redux';
-import Head from 'next/head';
+import React from "react";
+import {
+  Card,
+  Frame,
+  Layout,
+  Loading,
+  SkeletonBodyText,
+  SkeletonDisplayText,
+  SkeletonPage,
+  TextContainer
+} from "@shopify/polaris";
+import { connect } from "react-redux";
+import Head from "next/head";
 
-import NavigationBar from '../app/navigation';
-import TopBarMenu from '../app/topbar';
+import NavigationBar from "../app/navigation";
+import TopBarMenu from "../app/topbar";
 
-import '../../static/style/main.scss';
-import  Router from 'next/router';
+import "../../static/style/main.scss";
+import Router from "next/router";
 
 type LayoutProps = {
-  showMobileNavigation:boolean,
-  dispatch:any,
-  isLoading:boolean,
-  Loading:any,
-  Loaded: any,
-  title?:string,
-  getUserData:any,
-  toogleNav:any,
-  user:any
-}
+  showMobileNavigation: boolean;
+  dispatch: any;
+  isLoading: boolean;
+  Loading: any;
+  Loaded: any;
+  title?: string;
+  getUserData: any;
+  toogleNav: any;
+  user: any;
+};
 class AppLayout extends React.PureComponent<LayoutProps> {
- 
   componentDidMount() {
-    this.routerConfig()
+    this.routerConfig();
     if (!localStorage.authToken) {
-      Router.push('/login');
+      Router.push("/login");
     } else {
-      if(Object.entries(this.props.user).length === 0 && this.props.user.constructor === Object){
+      if (
+        Object.entries(this.props.user).length === 0 &&
+        this.props.user.constructor === Object
+      ) {
         this.props.getUserData();
       }
     }
-    
   }
   routerConfig = () => {
-    Router.events.on('routeChangeStart',()=>{
+    Router.events.on("routeChangeStart", () => {
       this.props.Loading();
     });
-    Router.events.on('routeChangeComplete',()=>{
+    Router.events.on("routeChangeComplete", () => {
       this.props.Loaded();
     });
-    Router.events.on('routeChangeError',()=>{
+    Router.events.on("routeChangeError", () => {
       this.props.Loaded();
-    })
-    return;      
-    }
+    });
+    return;
+  };
 
-  
   render() {
-    const topBarMarkup = (
-      <TopBarMenu/>
-    );
+    const topBarMarkup = <TopBarMenu />;
 
-    const navigationMarkup = (
-      <NavigationBar/>
-    );
+    const navigationMarkup = <NavigationBar />;
 
     const loadingMarkup = this.props.isLoading ? <Loading /> : null;
 
-    const actualPageMarkup = (
-      this.props.children
-    );
+    const actualPageMarkup = this.props.children;
 
     const loadingPageMarkup = (
       <SkeletonPage>
@@ -77,38 +80,44 @@ class AppLayout extends React.PureComponent<LayoutProps> {
       </SkeletonPage>
     );
 
-    const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
-    // const pageMarkup = actualPageMarkup; 
+    const pageMarkup = this.props.isLoading
+      ? loadingPageMarkup
+      : actualPageMarkup;
+    // const pageMarkup = actualPageMarkup;
     return (
-      <div style={{height: '500px'}}>  
-          <Head>
-            <title>{this.props.title ? this.props.title + " - TTS" : "SELLER CENTER - TTS"}</title>
-          </Head>      
-          <Frame
-            topBar={topBarMarkup}
-            navigation={navigationMarkup}
-            showMobileNavigation={this.props.showMobileNavigation}
-            onNavigationDismiss={this.props.toogleNav}
-          >          
-            {loadingMarkup}
-            {pageMarkup}
-          </Frame>      
+      <div style={{ height: "500px" }}>
+        <Head>
+          <title>
+            {this.props.title
+              ? this.props.title + " - TTS"
+              : "SELLER CENTER - TTS"}
+          </title>
+        </Head>
+        <Frame
+          topBar={topBarMarkup}
+          navigation={navigationMarkup}
+          showMobileNavigation={this.props.showMobileNavigation}
+          onNavigationDismiss={this.props.toogleNav}
+        >
+          {loadingMarkup}
+          {pageMarkup}
+        </Frame>
       </div>
     );
   }
 
-  toggleState = (key) => {
+  toggleState = key => {
     return () => {
-      this.setState((prevState) => ({[key]: !prevState[key]}));
+      this.setState(prevState => ({ [key]: !prevState[key] }));
     };
-  };///delete
+  }; ///delete
 
-  handleSearchFieldChange = (value) => {
-    this.setState({searchText: value});
+  handleSearchFieldChange = value => {
+    this.setState({ searchText: value });
     if (value.length > 0) {
-      this.setState({searchActive: true});
+      this.setState({ searchActive: true });
     } else {
-      this.setState({searchActive: false});
+      this.setState({ searchActive: false });
     }
   };
 
@@ -116,26 +125,29 @@ class AppLayout extends React.PureComponent<LayoutProps> {
     this.setState(() => {
       return {
         searchActive: false,
-        searchText: '',
+        searchText: ""
       };
     });
-  }; 
+  };
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     showMobileNavigation: state.layout.showMobileNavigation,
     isLoading: state.layout.isLoading,
     user: state.user.user
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getUserData: () => dispatch({type:'REQUEST_USER_DATA'}),
-    toogleNav: () => dispatch({type:'TOOGLE_NAVIGATION'}),
-    Loading: () =>dispatch({type:'LOADING'}),
-    Loaded: () => dispatch({type:'LOADED'})
-  }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(AppLayout);
+    getUserData: () => dispatch({ type: "REQUEST_USER_DATA" }),
+    toogleNav: () => dispatch({ type: "TOOGLE_NAVIGATION" }),
+    Loading: () => dispatch({ type: "LOADING" }),
+    Loaded: () => dispatch({ type: "LOADED" })
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppLayout);

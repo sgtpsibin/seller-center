@@ -1,28 +1,29 @@
-*, *::before,*::after {
-    // margin: 0;
-    // padding: 0;
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  // margin: 0;
+  // padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --top-bar-color: rgb(28, 34, 96);
-    --dark-color: #212b36;
+  --top-bar-color: rgb(28, 34, 96);
+  --dark-color: #212b36;
 }
 
 html {
-    font-size: 62.5%;
-    font-family: 'Roboto', sans-serif;
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
 }
 
-body {   
-    font-size: 16px !important;
-    & a {
-        color: var(--dark-color);
-        text-decoration: none;
-        &:hover {
-            color: var(--dark-color);
-            text-decoration: none;
-        }
+body {
+  font-size: 16px !important;
+  & a {
+    color: var(--dark-color);
+    text-decoration: none;
+    &:hover {
+      color: var(--dark-color);
+      text-decoration: none;
     }
+  }
 }
-
