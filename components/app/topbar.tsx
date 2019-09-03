@@ -48,6 +48,7 @@ class TopBarMenu extends React.Component<TopBarProps,TopBarState> {
           },
         ]}
         name={shop.name}
+        avatar='https://nongdan.pro/wp-content/uploads/2017/05/shop-icon.png'
         // detail="TTS SELLER"
         initials="DE"
         open={userMenuOpen}

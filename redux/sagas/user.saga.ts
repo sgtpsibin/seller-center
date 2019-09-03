@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put } from 'redux-saga/effects';
 import {receiveUserData} from '../actions/user.action';
+import Router from 'next/router';
 
 export function* getUserData() {
     try {
@@ -16,5 +17,6 @@ export function* getUserData() {
         yield put(receiveUserData(userData));
     } catch (e) {
         localStorage.removeItem('authToken');
+        Router.push('/login');
     }
 }

@@ -19,6 +19,8 @@ import { TitleMetadata } from '../../components/app/OrderPage/titleMetadata';
 import AppLayout from '../../components/library/layout';
 import { addOrder } from '../../redux/actions/orders.action';
 
+import Router from 'next/router'
+
 type Props = {
     query:any,
     url:any,
@@ -61,11 +63,12 @@ class OrderPage extends React.PureComponent<Props,State> {
     
     componentDidMount() {
         const altId = window.location.pathname.match(/\d+/g).map(Number).toString();
+        // console.log(Router.pathname);
         const id = this.props.query.id || altId;
         fetchOrderById(id).then(order=>{
             this.props.addOrder(order)
             this.setState({order,loading:false});
-            console.log(order);
+            // console.log(order);
         });        
     }
 
@@ -102,18 +105,8 @@ class OrderPage extends React.PureComponent<Props,State> {
                             <p>No phone number</p>
                         </Card.Section>
                        
-                        <ShippingAddressSection
-                            name={shipping_address.name||''}
-                            address1={shipping_address.address1||''}
-                            address2={shipping_address.address2||''}
-                            zip={shipping_address.zip||''}
-                            first_name={shipping_address.first_name}
-                            last_name={shipping_address.last_name}
-                            province={shipping_address.province||''}
-                            city={shipping_address.city||''}
-                            phone={shipping_address.phone}
-                            company={shipping_address.company}
-                        />                       
+                        <ShippingAddressSection />                    
+                                 
 
                         <Card.Section title="billing address" actions={[{content:"Edit"}]}>
                             <p>No billing address</p>

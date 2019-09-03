@@ -5,7 +5,7 @@ class NewOrder extends React.PureComponent<{oid:string,query:any}> {
         return{query}
     }
     render() {
-        console.log(this.props.query)
+        // console.log(this.props.query)
         return(
             <h1>ok</h1>
         );

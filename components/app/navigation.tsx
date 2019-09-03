@@ -9,13 +9,10 @@ import {HomeMajorMonotone,
         AnalyticsMajorMonotone} from '@shopify/polaris-icons';
 
 import {withRouter, NextRouter } from 'next/router';
-import {connect} from 'react-redux';
 // import Router from 'next/router';
 
 type Props = {
-  router: NextRouter,
-  Loading:()=>any,
-  Loaded: () => any
+  router: NextRouter 
 }
 class NavigationBar extends React.PureComponent<Props> {    
 
@@ -25,26 +22,13 @@ class NavigationBar extends React.PureComponent<Props> {
         };
     };  
 
-    // routerConfig = () => {
-    //   Router.events.on('routeChangeStart',()=>{
-    //     this.props.Loading();
-    //   });
-    //   Router.events.on('routeChangeComplete',()=>{
-    //     this.props.Loaded();
-    //   });
-    //   Router.events.on('routeChangeError',()=>{
-    //     this.props.Loaded();
-    //   })
-    //   return;      
-    // }
-    
     isSelected = (url:string,altUrl?:string):boolean => {
-      const { pathname } = this.props.router;
+      const { asPath } = this.props.router;
 
       // if(altUrl) {
       //   if(asPath===altUrl)
       // }
-      if (pathname.split('/')[1]===url) {
+      if (asPath.split('/')[1].split('?')[0]===url) {
         return true;
       }
       return false;
@@ -111,10 +95,5 @@ class NavigationBar extends React.PureComponent<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    Loading: ()=> dispatch({type:'LOADING'}),
-    Loaded: ()=> dispatch({type:'LOADED'})
-  }
-}
-export default connect(null,mapDispatchToProps)(withRouter(NavigationBar));
+
+export default withRouter(NavigationBar);

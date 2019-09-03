@@ -10,17 +10,17 @@ export function paymentStatusBadge(status:string) {
             return <Badge status="attention" progress="partiallyComplete">Partially Paid</Badge>       
             
         default:
-            return <Badge status="warning" progress="incomplete">Unpaid</Badge>
+            return <Badge status="warning" progress="incomplete">Chưa thanh toán</Badge>
     }
 }
 
 export function fulfillmentStatusBadge(status:string) {
     switch (status) {
         case 'fulfilled':
-            return <Badge progress="complete">Fulfilled</Badge>
+            return <Badge progress="complete">Đã ship đủ</Badge>
         case 'partial':
-            return <Badge status="warning" progress="partiallyComplete">Partially fulfilled</Badge>
+            return <Badge status="warning" progress="partiallyComplete">Chưa ship đủ</Badge>
         default:
-            return <Badge status="attention" progress="incomplete">Unfulfilled</Badge>
+            return <Badge status="attention" progress="incomplete">Chưa ship</Badge>
     }
 }

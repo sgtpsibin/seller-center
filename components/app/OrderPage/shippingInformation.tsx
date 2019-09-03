@@ -2,28 +2,45 @@ import React from 'react';
 import {Modal,Card} from '@shopify/polaris';
 import EditShipInfoForm from './Forms/EditShipInfo';
 
-type Props = {
-  name?:string,
-  address1?:string,
-  first_name:string,
-  last_name:string,
-  address2?:string,
-  zip?:string,
-  phone?:string,
-  province?:string,
-  city?:string,
-  company?:string,
-}
+import { connect } from 'react-redux';
 
-class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
+class ShippingAddressSection extends React.PureComponent<any,any> {
+  constructor(props) {
+    super(props);
+  }
   state = {
     active: false,
+    address1: '',
+    address2: '',
+    city: "",
+    company: '',
+    country: "",
+    country_code: '',
+    created_at: "",
+    first_name: "",
+    id: null,
+    last_name:"",
+    latitude: '',
+    longitude: '',
+    name: '',
+    order_id: null,
+    phone: "",
+    province: "",
+    province_code: '',
+    shop_id: "",
+    updated_at: "",
+    zip: ""
   };
+
+  static getDerivedStateFromProps(props, state) {
+    const {shipping_address} = props.order;
+    return {...state,...shipping_address};
+  }
   
 
   render() {
     const {active} = this.state;
-    const { name,address1,address2,first_name,last_name,zip,province,city,phone,company} = this.props;
+    const { name,address1,first_name,last_name,zip,province,city,phone,company} = this.state;
     const modal = (
         <div>
         {/* <Button onClick={this.handleChange}>Open</Button> */}
@@ -52,8 +69,7 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
               last_name={last_name} 
               phone={phone}  
               company={company}
-              // onSubmit={(shipInfo)=>this.submitChange(shipInfo)}
-                     
+              // onSubmit={(shipInfo)=>this.submitChange(shipInfo)
             />
           </Modal.Section>
         </Modal>
@@ -83,4 +99,9 @@ class ShippingAddressSection extends React.Component<Props,{active:boolean}> {
   };
   
 }
-export default ShippingAddressSection;
+const mapStateToProps = state => {
+  return {
+    order: state.orders.order
+  }
+}
+export default connect(mapStateToProps)(ShippingAddressSection);

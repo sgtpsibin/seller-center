@@ -23,8 +23,8 @@ const OrderItem:FunctionComponent<Props> = (props) => {
            customer,financial_status,
            fulfillment_status,total_price,currency} = props;
     // const media = <Avatar customer size="medium" name={name} />;
-    const fullDate = new Date(created_at).toDateString();
-    const orderDate = fullDate.replace(/GMT.*/, '');
+    const fullDate = new Date(created_at).toLocaleString('vi-VN',{weekday:'long',day:'numeric',month:'numeric',year:'numeric',hour:'numeric',minute:'numeric'});
+    // const orderDate = fullDate.replace(/GMT.*/, '');
 
     const paymentStatus =  paymentStatusBadge(financial_status);
   
@@ -55,7 +55,7 @@ const OrderItem:FunctionComponent<Props> = (props) => {
           <h3 className="mr-3">
             <TextStyle variation="strong">{name}</TextStyle>
           </h3>
-          {orderDate} 
+          {fullDate} 
           <div>
           {customer.last_name.concat(' '+ customer.first_name)}
           </div>

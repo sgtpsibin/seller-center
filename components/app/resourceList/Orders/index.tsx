@@ -1,20 +1,17 @@
 import React from 'react';
 import {Card, ResourceList,Pagination} from '@shopify/polaris';
 
+
 import OrderItem from './orderItem';
 import OrderFilter from './filter';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 
-type Props = {
-  orders?:any,
-  loading:boolean,
-  totalOrder: number,
-  router:any
-}
 
-class OrderResourceList extends React.PureComponent<Props> {
+
+
+class OrderResourceList extends React.PureComponent<any> {
   state = {
     selectedItems: []
   };

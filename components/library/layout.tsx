@@ -79,7 +79,6 @@ class AppLayout extends React.PureComponent<LayoutProps> {
 
     const pageMarkup = this.props.isLoading ? loadingPageMarkup : actualPageMarkup; 
     // const pageMarkup = actualPageMarkup; 
-    console.log('reload');
     return (
       <div style={{height: '500px'}}>  
           <Head>
@@ -127,7 +126,7 @@ const mapStateToProps = (state) => {
   return {
     showMobileNavigation: state.layout.showMobileNavigation,
     isLoading: state.layout.isLoading,
-    user: state.user.user,
+    user: state.user.user
   }
 }
 

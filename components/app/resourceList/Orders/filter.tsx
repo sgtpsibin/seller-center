@@ -2,45 +2,45 @@ import React from 'react';
 import { ChoiceList, Filters,Button} from '@shopify/polaris';
 import {
   StarOutlineMinor,
-  SortMinor
+  SortMinor,
+  TaxMajorMonotone
 } from '@shopify/polaris-icons';
 import { connect } from 'react-redux';
 
 import { debounce } from 'lodash';
 import { getCurrentQuery } from '../../../../utils/getCurrentQuery';
-import Router  from 'next/router';
+import Router from 'next/router';
 
 class OrderFilters extends React.PureComponent<any> {
+  initialState = {
+    status: null,
+    fulfillment_status: null,
+    financial_status: null,
+    query: null
+  }
   state = {
     status: null,
     fulfillment_status: null,
     financial_status: null,
     query: null
   };
+  
 
-  componentDidMount() {
-     //POPSTATE CONFIG 
+  componentDidMount() {    
     window.onpopstate=()=>{
-      const {pathname,search} = window.location;
-      if(pathname==="/orders") {
-        if(Router.pathname!==pathname) {
-          this.props.reqOrderWithQuery(search.substring(1));
-          Router.push(pathname+search,pathname+search);
-          return
-        }
-        this.props.reqOrderWithQuery(search.substring(1));
-        let getQuery = getCurrentQuery();
-        let popstateQuery = Object.assign(this.state,getQuery);
-        this.setState(popstateQuery);
+      const { pathname } = window.location;
+      if(pathname==='/orders') {
+        let query = getCurrentQuery();
+        let stringify = Object.keys(query).map(key => key + '=' + query[key]).join('&');
+        this.props.reqOrderWithQuery(stringify);
       }
-    };
-    //POPSTATE CONFIG 
-    if(!window.location.search) {
-      return
-    } else {
+    }
+    if(window.location.search) {
       const currentQuery = getCurrentQuery();
-      const newQuery = Object.assign(this.state,currentQuery);
-      this.setState(newQuery);
+      const newQuery = Object.assign(this.initialState,currentQuery);
+      this.setState(newQuery);      
+    } else {
+        return      
     }    
   }
   
@@ -85,17 +85,15 @@ class OrderFilters extends React.PureComponent<any> {
             focused={true}>
               <div className="d-flex flex-row">
                 <div className="mx-3">
-                  <Button icon={StarOutlineMinor}></Button>
+                  <Button onClick={()=>alert('Tính năng đang cập nhật')} icon={StarOutlineMinor}></Button>
                 </div>
                 <div className="mr-2">
-                  <Button icon={SortMinor}></Button>
+                  <Button onClick={()=>alert('Tính năng đang cập nhật')} icon={SortMinor}></Button>
                 </div>
               </div>              
             </Filters>            
     </>);
-  }
-
-  
+  }  
 
   filterToQuery = () => {
     let queryObject = {};
@@ -118,8 +116,8 @@ class OrderFilters extends React.PureComponent<any> {
 
   reloadResourceList = debounce(() => {    
       const query= this.filterToQuery();
-      window.history.pushState(null,null,`/orders?${query}`);
       this.props.reqOrderWithQuery(query);
+      Router.push(`/orders?${query}`,`/orders?${query}`,{shallow:true});
   },1000);
 
   handleRemove = key => {
