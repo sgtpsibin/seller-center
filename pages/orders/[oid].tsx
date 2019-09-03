@@ -2,17 +2,20 @@ import React from 'react';
 
 import ShippingAddressSection from '../../components/app/OrderPage/shippingInformation';
 import ContactInformationSection from '../../components/app/OrderPage/contactInformtion';
+import FulfillmentStatusSection from '../../components/app/OrderPage/fulfillmentStatus';
+import NoteSection from '../../components/app/OrderPage/noteSection';
+import loadingMarkup from '../../components/app/OrderPage/loadingMarkup';
+
+import {
+    PrintMinor
+  } from '@shopify/polaris-icons';
 
 import {connect} from 'react-redux';
 
 import {
     Page,
     Card,
-    Layout,
-    SkeletonBodyText,
-    SkeletonDisplayText,
-    SkeletonPage,
-    TextContainer
+    Layout
   } from "@shopify/polaris";
 
 import { fetchOrderById } from '../../utils/api/orders';
@@ -31,6 +34,7 @@ type Props = {
 type State = {
     order:any,
     loading:boolean,
+    hasError:boolean
 
 }
 class OrderPage extends React.PureComponent<Props,State> {
@@ -79,9 +83,11 @@ class OrderPage extends React.PureComponent<Props,State> {
                 shop_id: "",
                 updated_at: "",
                 zip: ""
-            }
+            },
+            note:null
         },
-        loading:true        
+        loading:true,
+        hasError: false     
     }
     
     componentDidMount() {
@@ -95,9 +101,13 @@ class OrderPage extends React.PureComponent<Props,State> {
         });        
     }
 
+    componentDidCatch() {
+        this.setState({hasError:true})
+    }
+
     render() {
         
-        const {id,name,created_at,financial_status,fulfillment_status,shipping_address,billing_address} = this.state.order;
+        const {id,name,created_at,financial_status,fulfillment_status,shipping_address,billing_address,note} = this.state.order;
         const { loading } = this.state;
         const pageMarkup = (
             <Page 
@@ -107,86 +117,54 @@ class OrderPage extends React.PureComponent<Props,State> {
                                     created_at={created_at}
                                     financial_status={financial_status}
                                     fulfillment_status={fulfillment_status}
-                                />}  
+                                />} 
+                actionGroups={[{actions:[{content:'In',icon:PrintMinor,onAction:()=>window.print()}],title:'Hành động'}]}
             >
                 <Layout>
-                <Layout.Section>
-                    <Card title="Fulfillment Status" sectioned>
-                    <p>View a summary of your order.</p>
-                    </Card>
-                </Layout.Section>
-                <Layout.Section secondary>
-                    <Card title="Note" sectioned>
-                        <p>No notes from customer</p>
-                    </Card>
-                    <Card title="Customer">
-                        <Card.Section>
-                            <p>No customer</p>
-                        </Card.Section>
 
-                        {/* contact infor section */}
-                        <ContactInformationSection/>
-                       
-                        {/* shipping address section */}
-                        <ShippingAddressSection />               
-                                
-                        <Card.Section title="billing address">
-                            <div className="text-muted">
-                                <p className="my-0">{billing_address.first_name+' '+billing_address.last_name}</p>
-                                <p className="my-0">{billing_address.address1||''}</p>
-                                <p className="my-0">{(billing_address.province||'')+' '+(billing_address.zip||'')}</p>
-                            </div>
-                        </Card.Section>                        
-                    </Card>
-                </Layout.Section>
+                    <FulfillmentStatusSection fulfillment_status={fulfillment_status}/>
+
+                    <Layout.Section secondary>
+
+                        {/*Notes Section*/ }
+                       <NoteSection note={note}/>
+
+                        <Card title="Customer">
+                            <Card.Section>
+                                <p>No customer</p>
+                            </Card.Section>
+
+                            {/* contact infor section */}
+                            <ContactInformationSection/>
+                        
+                            {/* shipping address section */}
+                            <ShippingAddressSection />               
+                                    
+                            <Card.Section title="billing address">
+                                <div className="text-muted">
+                                    <p className="my-0">{billing_address.first_name+' '+billing_address.last_name}</p>
+                                    <p className="my-0">{billing_address.address1||''}</p>
+                                    <p className="my-0">{(billing_address.province||'')+' '+(billing_address.zip||'')}</p>
+                                </div>
+                            </Card.Section>                        
+                        </Card>
+                    </Layout.Section>
                 </Layout>
             </Page>
 
         );
         // console.log(this.state.shipping_address.city);
-        const loadingMarkup = (
-                <SkeletonPage primaryAction secondaryActions={2}>
-                    <Layout>
-                        <Layout.Section>
-                            <Card sectioned>
-                            <SkeletonBodyText />
-                            </Card>
-                            <Card sectioned>
-                            <TextContainer>
-                                <SkeletonDisplayText size="small" />
-                                <SkeletonBodyText />
-                            </TextContainer>
-                            </Card>
-                            <Card sectioned>
-                            <TextContainer>
-                                <SkeletonDisplayText size="small" />
-                                <SkeletonBodyText />
-                            </TextContainer>
-                            </Card>
-                        </Layout.Section>
-                        <Layout.Section secondary>
-                            <Card>
-                            <Card.Section>
-                                <TextContainer>
-                                <SkeletonDisplayText size="small" />
-                                <SkeletonBodyText lines={2} />
-                                </TextContainer>
-                            </Card.Section>
-                            <Card.Section>
-                                <SkeletonBodyText lines={1} />
-                            </Card.Section>
-                            </Card>
-                        </Layout.Section>
-                    </Layout>
-                </SkeletonPage>
-        );
+        
         
         const renderPage = loading ? loadingMarkup : pageMarkup;
-        return(
-            <AppLayout title={`${name||'__'} - Order Detail`}>
-                {renderPage}
-            </AppLayout>
-        );
+        if (this.state.hasError===false) {
+            return(               
+                    <AppLayout title={`${name||'__'} - Order Detail`}>
+                        {renderPage}
+                    </AppLayout>                 
+            )
+        }
+        return <h1>Error,we're finxing this problem</h1>
     }
 }
 const mapDispatchToProps = (dispatch) => {

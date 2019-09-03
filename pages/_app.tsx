@@ -1,5 +1,5 @@
 import App from 'next/app'
-import Link from 'next/link';
+import {Link} from '../server/routes';
 import React from 'react'
 import { Provider } from 'react-redux'
 import { AppProvider} from '@shopify/polaris';
@@ -26,10 +26,10 @@ const theme = {
 const CustomLinkComponent = ({children, url, ...rest}) => {
   return (
     <Link
-      href={url}
+      route={url}
     >
       <a
-      {...rest}
+      {...rest}           
       >
         {children}
       </a>

@@ -118,7 +118,7 @@ class OrderFilters extends React.PureComponent<any> {
       const query= this.filterToQuery();
       this.props.reqOrderWithQuery(query);
       Router.push(`/orders?${query}`,`/orders?${query}`,{shallow:true});
-  },1000);
+  },700);
 
   handleRemove = key => {
     this.setState({ [key]: null },()=>this.reloadResourceList());

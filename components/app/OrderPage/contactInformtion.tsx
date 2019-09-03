@@ -1,7 +1,8 @@
 import React from 'react';
-import {Modal, TextContainer,Card} from '@shopify/polaris';
+import {Modal, TextContainer,Card,TextField} from '@shopify/polaris';
 
 import { connect } from 'react-redux';
+import EditContactInfoForm from './Forms/EditContactInfo';
 
 class ContactInformationSection extends React.PureComponent<any,any> {
   state = {
@@ -22,13 +23,12 @@ class ContactInformationSection extends React.PureComponent<any,any> {
   
   render() {
     const {active,email,phone} = this.state;
-
     const modal = (
         <div>
         <Modal
           open={active}
           onClose={this.handleChange}
-          title="Reach more shoppers with Instagram product tags"
+          title="Sửa thông tin liên hệ"
           primaryAction={{
             content: 'Save',
             onAction: this.handleChange,
@@ -41,13 +41,7 @@ class ContactInformationSection extends React.PureComponent<any,any> {
           ]}
         >
           <Modal.Section>
-            <TextContainer>
-              <p>
-                Use Instagram posts to share your products with millions of
-                people. Let shoppers buy from your store without leaving
-                Instagram.
-              </p>
-            </TextContainer>
+            <EditContactInfoForm email={email} phone={phone}/>            
           </Modal.Section>
         </Modal>
       </div>

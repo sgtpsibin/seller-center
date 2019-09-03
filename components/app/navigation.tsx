@@ -61,15 +61,29 @@ class NavigationBar extends React.PureComponent<Props> {
                   {
                     url:'/draft_orders',
                     label: 'Drafts',
-                    matches:this.isSelected('draft_orders')
+                    matches:this.isSelected('draft_orders'),
                   }
                 ]               
               },
               {
                 url: '/products',
+                
                 selected: this.isSelected('products'),
                 label: 'Sản phẩm',
                 icon: ProductsMajorMonotone,
+                subNavigationItems: [
+                  {
+                    url: '/products',
+                    label: 'All products',
+                    matches:this.isSelected('products'),
+                  },
+                  {
+                    url: '/inventory',
+                    
+                    label: 'Inventory',
+                    matches:this.isSelected('inventory'),
+                  }
+                ]
               },
               {
                 url: '/customers',
