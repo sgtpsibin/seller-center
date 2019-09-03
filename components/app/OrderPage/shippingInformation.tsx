@@ -86,7 +86,7 @@ class ShippingAddressSection extends React.PureComponent<any,any> {
     )
 
     return (
-        <Card.Section title="shipping address" actions={[{content:"Edit",onAction:this.handleChange}]}>
+        <Card.Section subdued title="shipping address" actions={[{content:"Edit",onAction:this.handleChange}]}>
             {/* <p>No shipping address</p> */}
             {shipInfo}
             {modal}

@@ -1,15 +1,11 @@
 import React from 'react';
 import {Card, ResourceList,Pagination} from '@shopify/polaris';
 
-
 import OrderItem from './orderItem';
 import OrderFilter from './filter';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-
-
-
 
 class OrderResourceList extends React.PureComponent<any> {
   state = {

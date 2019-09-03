@@ -1,6 +1,8 @@
 import React from 'react';
 
 import ShippingAddressSection from '../../components/app/OrderPage/shippingInformation';
+import ContactInformationSection from '../../components/app/OrderPage/contactInformtion';
+
 import {connect} from 'react-redux';
 
 import {
@@ -48,17 +50,38 @@ class OrderPage extends React.PureComponent<Props,State> {
                 address1:'',
                 address2:null,
                 name:null,
-                first_name:null,
-                last_name:null,
+                first_name:'',
+                last_name:'',
                 zip:'',
                 province:'',
                 city:'',
                 phone:'',
                 company:''
+            },
+            billing_address:{
+                address1: "",
+                address2: '',
+                city: "",
+                company: '',
+                country: "",
+                country_code: null,
+                created_at: "",
+                first_name: "",
+                id: null,
+                last_name: "",
+                latitude: '',
+                longitude: '',
+                name: '',
+                order_id: null,
+                phone: "",
+                province: "",
+                province_code: null,
+                shop_id: "",
+                updated_at: "",
+                zip: ""
             }
         },
-        loading:true
-        
+        loading:true        
     }
     
     componentDidMount() {
@@ -68,13 +91,13 @@ class OrderPage extends React.PureComponent<Props,State> {
         fetchOrderById(id).then(order=>{
             this.props.addOrder(order)
             this.setState({order,loading:false});
-            // console.log(order);
+            console.log(order);
         });        
     }
 
     render() {
         
-        const {id,name,created_at,financial_status,fulfillment_status,shipping_address} = this.state.order;
+        const {id,name,created_at,financial_status,fulfillment_status,shipping_address,billing_address} = this.state.order;
         const { loading } = this.state;
         const pageMarkup = (
             <Page 
@@ -100,16 +123,19 @@ class OrderPage extends React.PureComponent<Props,State> {
                         <Card.Section>
                             <p>No customer</p>
                         </Card.Section>
-                        <Card.Section title="contact information" actions={[{content:"Edit"}]}>
-                            <p>No contact information</p>
-                            <p>No phone number</p>
-                        </Card.Section>
-                       
-                        <ShippingAddressSection />                    
-                                 
 
-                        <Card.Section title="billing address" actions={[{content:"Edit"}]}>
-                            <p>No billing address</p>
+                        {/* contact infor section */}
+                        <ContactInformationSection/>
+                       
+                        {/* shipping address section */}
+                        <ShippingAddressSection />               
+                                
+                        <Card.Section title="billing address">
+                            <div className="text-muted">
+                                <p className="my-0">{billing_address.first_name+' '+billing_address.last_name}</p>
+                                <p className="my-0">{billing_address.address1||''}</p>
+                                <p className="my-0">{(billing_address.province||'')+' '+(billing_address.zip||'')}</p>
+                            </div>
                         </Card.Section>                        
                     </Card>
                 </Layout.Section>
